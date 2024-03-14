@@ -1,0 +1,71 @@
+.company .nav {
+  background-color: var(--color-primary-dark-1);
+}
+
+.company .nav-brand {
+  color: var(--color-light);
+  font-size: 16px;
+}
+
+.company .nav-link {
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--color-light);
+  border-radius: 10px;
+  transition: border-radius 0.8s ease;
+}
+
+.company .nav-link:hover {
+  background-color: var(--color-light);
+  color: var(--color-primary);
+  border-radius: 30px;
+}
+
+.company .container-primary {
+  background-color: var(--color-light);
+  color: var(--color-primary-dark-1);
+}
+
+.company .pop-up-chat {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  z-index: auto;
+}
+
+.company .pop-up-chat .chat-action {
+  background-color: var(--color-primary);
+  color: var(--color-light);
+  font-size: 30px;
+}
+
+.company .pop-up-chat .chatbox.container {
+  padding: 0;
+  width: 300px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.company .pop-up-chat .chatbox.header {
+  background-color: var(--color-light);
+  border-radius: 10px 10px 0px 0px;
+}
+
+.company .pop-up-chat .chatbox.content {
+
+}
+
+.company .pop-up-chat .chatbox.content p {
+  color: var(--color-primary);
+  font-size: 11px;
+}
+
+.company .pop-up-chat .chatbox.content .form-control {
+  height: 2rem;
+  font-size: 14px;
+}
+
+.company .pop-up-chat .form-check-label {
+  color: var(--color-primary);
+  font-size: 11px;
+}

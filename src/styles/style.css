@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+:root {
+  /* Existing primary and accent colors */
+  --color-primary: #ff4b4b; /* rgb(255, 75, 75) */
+  --color-complementary: #4bb4ff; /* rgb(75, 180, 255) */
+  --color-analogous-1: #ff4bc9; /* rgb(255, 75, 201) */
+  --color-analogous-2: #ffa14b; /* rgb(255, 161, 75) */
+
+  /* Light theme */
+  --color-light: #ffffff; /* rgb(255, 255, 255) - Light background */
+  --color-light-text: #333333; /* rgb(51, 51, 51) - Dark text for light background */
+
+  /* Dark theme */
+  --color-dark: #121212; /* rgb(18, 18, 18) - Dark background */
+  --color-dark-text: #e0e0e0; /* rgb(224, 224, 224) - Light text for dark background */
+
+  /* Lighter and Darker shades of primary */
+  --color-primary-light-1: #ff7373; /* rgb(255, 115, 115) */
+  --color-primary-light-2: #ff9b9b; /* rgb(255, 155, 155) */
+  --color-primary-light-3: #ffc2c2; /* rgb(255, 194, 194) */
+  --color-primary-light-4: #ffe9e9; /* rgb(255, 233, 233) */
+  --color-primary-dark-1: #e04242; /* rgb(224, 66, 66) */
+  --color-primary-dark-2: #c23838; /* rgb(194, 56, 56) */
+  --color-primary-dark-3: #a42e2e; /* rgb(164, 46, 46) */
+  --color-primary-dark-4: #862424; /* rgb(134, 36, 36) */
+
+  --padding-xs: 0px 20px;
+  --padding-sm: 0px 30px;
+  --padding-md: 0px 40px;
+  --padding-lg: 0px 50px;
+  --padding-xl: 0px 60px;
+}
+
+* {
+  margin: 0;
+  line-height: calc(1em + 0.5rem);
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background-color: var(--color-light);
+  font-size: clamp(10px, 2vw, 24px);
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+  user-select: none;
+}
