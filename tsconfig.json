@@ -24,6 +24,7 @@
     "baseUrl": ".",
     "paths": {
       "@/apps/*": ["src/apps/*"],
+      "@/components/*": ["src/components/*"],
       "@/assets/*": ["src/assets/*"],
       "@/router/*": ["src/router/*"]
     }

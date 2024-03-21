@@ -13,6 +13,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@/apps': resolve(root, 'apps'),
+      '@/components': resolve(root, 'components'),
       '@/assets': resolve(root, 'assets'),
       '@/router': resolve(root, 'router'),
     },

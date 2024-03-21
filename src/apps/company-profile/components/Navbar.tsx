@@ -1,4 +1,6 @@
 import imageLogo from '@/assets/Telkomsel_2021_icon.svg.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 function Navbar() {
   return (
@@ -15,12 +17,10 @@ function Navbar() {
             height="30px"
             className="d-inline-block align-text-top mx-1"
           />
-          <span className="nav-brand">
-            PT. Telekomunikasi Indonesia
-          </span>
+          <span className="nav-brand">PT. Telekomunikasi Indonesia</span>
         </a>
         <button
-          className="navbar-toggler"
+          className="navbar-toggler button"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#navbarContent"
@@ -28,7 +28,7 @@ function Navbar() {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon"></span>
+          <FontAwesomeIcon icon={faBars} className="navbar-toggler-icon" />
         </button>
         <div
           className="collapse navbar-collapse"
@@ -40,13 +40,10 @@ function Navbar() {
               Beranda
             </a>
             <a href="/" className="nav-link p-2">
-              Layanan
+              Organisasi
             </a>
             <a href="/" className="nav-link p-2">
-              Tentang Kami
-            </a>
-            <a href="/" className="nav-link p-2">
-              Kontak
+              Laporan
             </a>
           </div>
         </div>

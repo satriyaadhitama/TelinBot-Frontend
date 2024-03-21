@@ -1,3 +1,8 @@
+.navbar-toggler:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .button {
   font-size: 16px;
   font-weight: bold;
@@ -6,6 +11,52 @@
   border: none;
   text-decoration: none;
   letter-spacing: -0.05em;
-  border-radius: 50px;
+  border-radius: 10px;
   background-color: transparent;
+}
+
+.conversation-container {
+  overflow: hidden;
+}
+
+.conversation {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  background-color: rgb(249, 249, 249);
+  height: 100%;
+  border-radius: 20px;
+  padding: 10px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+.bubble-receiver {
+  align-self: flex-start;
+  background-color: rgb(220, 220, 220);
+  max-width: 65%;
+  border-radius: 15px;
+  padding: 12px;
+  box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.bubble-sender {
+  align-self: self-end;
+  background-color: var(--color-primary-light-3);
+  max-width: 65%;
+  border-radius: 15px;
+  padding: 12px;
+  box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.bubble-text-message {
+  color: var(--color-dark);
+  font-size: 12px;
+  margin: 0;
+}
+
+.bubble-time {
+  display: block;
+  font-size: 10px;
+  color: grey;
 }
