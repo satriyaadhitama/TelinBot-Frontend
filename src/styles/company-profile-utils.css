@@ -8,18 +8,6 @@
   width: 100%;
 }
 
-.company .button-light {
-  background-color: var(--color-light);
-  color: var(--color-primary);
-  padding: 1rem;
-}
-
-.company .button-primary {
-  background-color: var(--color-primary);
-  color: var(--color-light);
-  padding: 1rem;
-}
-
 .company .title {
   font-size: 50px;
   font-weight: 600;

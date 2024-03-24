@@ -30,11 +30,7 @@ function Navbar() {
         >
           <FontAwesomeIcon icon={faBars} className="navbar-toggler-icon" />
         </button>
-        <div
-          className="collapse navbar-collapse"
-          id="navbarContent"
-          style={{ height: '0px' }}
-        >
+        <div className="collapse navbar-collapse" id="navbarContent">
           <div className="navbar-nav">
             <a href="/" className="nav-link p-2">
               Beranda
@@ -45,6 +41,13 @@ function Navbar() {
             <a href="/" className="nav-link p-2">
               Laporan
             </a>
+          </div>
+          <div className="nav-auth-container ms-auto">
+            <div className="navbar-nav">
+              <a href="/sign-in" className="login-link">
+                MASUK
+              </a>
+            </div>
           </div>
         </div>
       </div>
