@@ -35,10 +35,10 @@ function Navbar() {
             <a href="/" className="nav-link p-2">
               Beranda
             </a>
-            <a href="/" className="nav-link p-2">
+            <a href="/organisasi" className="nav-link p-2">
               Organisasi
             </a>
-            <a href="/" className="nav-link p-2">
+            <a href="#" className="nav-link p-2">
               Laporan
             </a>
           </div>
