@@ -6,6 +6,7 @@ function Organisasi() {
   return (
     <Layout>
       <div className='mb-5'>Organisasi</div>
+      <p>Contoh bikin di branch 'organisasi'</p>
       <Main />
     </Layout>
   );
