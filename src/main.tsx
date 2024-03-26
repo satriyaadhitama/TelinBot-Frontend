@@ -13,6 +13,7 @@ import './styles/modern-normalize.css';
 import './styles/company-profile.css';
 import './styles/company-profile-utils.css';
 import './styles/auth.css'
+import './styles/dashboard.css'
 
 const client = new QueryClient({
   defaultOptions: {
