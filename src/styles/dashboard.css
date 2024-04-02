@@ -7,8 +7,8 @@
   flex-direction: column;
   height: 100vh;
   width: 250px;
-  background-color: var(--color-light);
-  border-right: 2px solid #eaeef4;
+  background-color: var(--color-bg-white);
+  border-right: 1px solid var(--color-medium-gray);
 }
 
 .sidebar-header {
@@ -68,12 +68,31 @@
 
 .sidebar-footer {
   margin-top: auto;
+  margin-bottom: 20px;
   flex-grow: 0;
-  padding: 0 10px;
+  display: flex;
+  justify-content: center;
 }
 
-.dashboard-main {
-  background-color: var(--color-bg-neutral);
+.dashboard-wrapper main {
+  display: flex;
+  flex-direction: column;
   width: 100%;
-  padding: 10px;
 }
+
+
+.dashboard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 4rem;
+  border-bottom: 1px solid var(--color-medium-gray);
+  padding: 0 1.5rem;
+}
+
+.dashboard-content {
+  background-color: var(--color-bg-neutral);
+  flex-grow: 1;
+  padding: 1rem 1.5rem;
+}
+

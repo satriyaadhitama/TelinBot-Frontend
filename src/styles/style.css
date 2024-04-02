@@ -25,8 +25,10 @@
   --color-primary-dark-3: #a42e2e; /* rgb(164, 46, 46) */
   --color-primary-dark-4: #862424; /* rgb(134, 36, 36) */
 
-  --color-bg-neutral: #f5f5f5;
-  
+  --color-bg-neutral: #f7f7f7;
+  --color-bg-white: #fbfbfb;
+  --color-medium-gray: #d0d0d0;
+
   --padding-xs: 0px 20px;
   --padding-sm: 0px 30px;
   --padding-md: 0px 40px;

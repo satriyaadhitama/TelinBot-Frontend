@@ -1,4 +1,4 @@
-import { SignIn, Overview } from '@/apps/dashboard/pages';
+import { SignIn, Overview, Finance, Question } from '@/apps/dashboard/pages';
 
 export const dashboardRoutes = [
   {
@@ -8,5 +8,13 @@ export const dashboardRoutes = [
   {
     path: '/dashboard',
     element: <Overview />,
+  },
+  {
+    path: '/dashboard/keuangan',
+    element: <Finance />,
+  },
+  {
+    path: '/dashboard/faq',
+    element: <Question />,
   },
 ];

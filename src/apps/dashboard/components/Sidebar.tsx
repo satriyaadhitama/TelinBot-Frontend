@@ -18,25 +18,25 @@ function Sidebar() {
         </a>
       </div>
       <div className="sidebar-link">
-        <a href="dashboard/users" className="sidebar-item">
+        <a href="/dashboard" className="sidebar-item">
           <FontAwesomeIcon icon={faChartSimple} className="sidebar-icon" />
           <span>Aktivitas</span>
         </a>
-        <a href="dashboard/keuangan" className="sidebar-item">
+        <a href="/dashboard/keuangan" className="sidebar-item">
           <FontAwesomeIcon
             icon={faFileInvoiceDollar}
             className="sidebar-icon"
           />
           <span>Keuangan</span>
         </a>
-        <a href="dashboard/frequently-asked" className="sidebar-item">
+        <a href='/dashboard/faq' className="sidebar-item">
           <FontAwesomeIcon icon={faCircleQuestion} className="sidebar-icon" />
           <span>FAQ</span>
         </a>
       </div>
       <div className="sidebar-footer">
-        <button className="button sidebar-item">
-          <FontAwesomeIcon icon={faRightFromBracket} className='sidebar-icon'/>
+        <button className="button button-primary">
+          <FontAwesomeIcon icon={faRightFromBracket} className="button-icon" />
           <span>Keluar</span>
         </button>
       </div>
