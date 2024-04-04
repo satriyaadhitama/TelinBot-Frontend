@@ -6,7 +6,7 @@ function SearchBar() {
   return (
     <div className="d-flex">
       <input type="text" className="form-control" placeholder="Search..." />
-      <button className="button" style={{marginLeft:'0.3rem'}}>
+      <button className="button" style={{marginLeft:'0.3`rem'}}>
         <FontAwesomeIcon icon={faSearch} className='fs-4'/>
       </button>
     </div>
