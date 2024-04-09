@@ -1,5 +1,6 @@
 .company .nav {
   background-color: var(--color-primary-dark-1);
+  min-height: 78px;
 }
 
 .company .nav-brand {
@@ -18,6 +19,7 @@
   color: var(--color-light);
   border-radius: 12px;
   transition: border-radius 1s ease;
+  text-align: center;
 }
 
 .company .nav-link:hover {
@@ -50,7 +52,7 @@
 .company .pop-up-chat .chat-action {
   background-color: var(--color-primary);
   color: var(--color-light);
-  border-radius:50%;
+  border-radius: 50%;
   font-size: 30px;
 }
 

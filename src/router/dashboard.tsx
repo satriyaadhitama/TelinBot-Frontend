@@ -1,20 +1,12 @@
-import { SignIn, Overview, Finance, Question } from '@/apps/dashboard/pages';
+import { Overview, Finance, Question } from '@/apps/dashboard/pages';
+import { ProtectedLayout } from '../components';
 
-export const dashboardRoutes = [
-  {
-    path: '/sign-in',
-    element: <SignIn />,
-  },
-  {
-    path: '/dashboard',
-    element: <Overview />,
-  },
-  {
-    path: '/dashboard/keuangan',
-    element: <Finance />,
-  },
-  {
-    path: '/dashboard/faq',
-    element: <Question />,
-  },
-];
+export const dashboardRoutes = {
+  path: 'dashboard',
+  element: <ProtectedLayout allowedGroups={['Admin']} />,
+  children: [
+    { index: true, element: <Overview /> },
+    { path: 'finance', element: <Finance /> },
+    { path: 'frequently-asked', element: <Question /> },
+  ],
+};

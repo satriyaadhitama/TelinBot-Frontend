@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCommentDots } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { ChatConversation } from '@/components';
+import { useSelector } from 'react-redux';
+import { RootState } from 'src/store';
 
 interface ChatContextData {
   toggleChatBox: () => void;
@@ -80,9 +82,16 @@ const UserChatForm = () => {
   );
 };
 
-const Chat = () => {
-  const { toggleLiveChat } = useContext(ChatContext);
+const SignInRequired = () => {
+  return (
+    <div className='d-flex flex-column align-items-center'>
+      <p>Authentication required to use Chatbot</p>
+      <a href="/auth/sign-in" className='button button-primary'>Sign In</a>
+    </div>
+  );
+};
 
+const Chat = () => {
   return (
     <div className="chatbox body-content">
       <div className="d-flex justify-content-center align-items-center">
@@ -116,6 +125,10 @@ const Chat = () => {
 const ChatBox = () => {
   const { toggleChatBox, isLiveChatOpen } = useContext(ChatContext);
 
+  const { isAuthenticated } = useSelector(
+    (state: RootState) => state.auth.value
+  );
+
   return (
     <div className="chatbox container">
       <div className="chatbox header d-flex align-items-center justify-content-end border-bottom p-2">
@@ -127,7 +140,9 @@ const ChatBox = () => {
           <FontAwesomeIcon icon={faChevronDown} />
         </button>
       </div>
-      <div className="p-3">{!isLiveChatOpen ? <UserChatForm /> : <Chat />}</div>
+      <div className="p-3">
+        {isAuthenticated ? <Chat /> : <SignInRequired />}
+      </div>
     </div>
   );
 };

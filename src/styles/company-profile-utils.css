@@ -17,3 +17,8 @@
   font-size: 20px;
 }
 
+@media (min-width: 992px) {
+  .company .company-container {
+    padding: 0 4rem;
+  }
+}

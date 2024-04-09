@@ -16,6 +16,10 @@ export default defineConfig({
       '@/components': resolve(root, 'components'),
       '@/assets': resolve(root, 'assets'),
       '@/router': resolve(root, 'router'),
+      '@/reducers': resolve(root, 'reducers'),
+      '@/services': resolve(root, 'services'),
+      '@/types': resolve(root, 'types'),
+      '@/hooks': resolve(root, 'hooks'),
     },
   },
 });

@@ -1,12 +1,9 @@
 import { Landing, Organisasi } from '@/apps/company-profile/pages';
 
-export const companyProfileRoutes = [
-  {
-    path: '/',
-    element: <Landing />,
-  },
-  {
-    path: '/organisasi',
-    element: <Organisasi />,
-  },
-];
+export const companyProfileRoutes = {
+  path: '/',
+  children: [
+    { index: true, element: <Landing /> },
+    { path: 'organization', element: <Organisasi /> },
+  ],
+};
