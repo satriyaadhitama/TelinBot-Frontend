@@ -94,7 +94,7 @@ function Navbar() {
               Organisasi
             </a>
             {isAuthenticated && (
-              <a href="#" className="nav-link p-2">
+              <a href="/" className="nav-link p-2">
                 Laporan
               </a>
             )}

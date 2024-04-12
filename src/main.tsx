@@ -18,8 +18,10 @@ import './styles/company-profile.css';
 import './styles/company-profile-utils.css';
 import './styles/auth.css';
 import './styles/dashboard.css';
+import './styles/dashboard-utils.css';
 // Redux store
 import { store, persistor } from './store';
+import { AuthLayout } from './components';
 
 const client = new QueryClient({
   defaultOptions: {
@@ -34,7 +36,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
     <QueryClientProvider client={client}>
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-          <RouterProvider router={router} />
+            <RouterProvider router={router} />
         </PersistGate>
       </Provider>
     </QueryClientProvider>

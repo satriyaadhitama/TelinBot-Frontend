@@ -27,6 +27,7 @@
 
   --color-bg-neutral: #f7f7f7;
   --color-bg-white: #fbfbfb;
+  --color-gray: #707070;
   --color-medium-gray: #d0d0d0;
 
   --padding-xs: 0px 20px;
@@ -64,4 +65,37 @@ svg {
 a {
   text-decoration: none;
   color: var(--color-dark);
+}
+
+/* Custom scrollbar for Webkit browser like Chrome, Safari */
+*::-webkit-scrollbar {
+  width: 12px; /* Scrollbar width */
+  height: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: #f1f1f1; /* Scrollbar track color */
+  border-radius: 10px; /* Roundness of the track */
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #888; /* Scrollbar handle color */
+  border-radius: 10px; /* Roundness of the handle */
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background: #555; /* Scrollbar handle color on hover */
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; /* Removes bullets/numbers */
+}
+
+li {
+  /* You can add additional styles here if needed */
+  margin: 0;
+  padding: 0;
 }

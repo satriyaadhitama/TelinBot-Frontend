@@ -1,7 +1,7 @@
 // Import Dependencies
 import { useState, FormEvent, ChangeEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 // Import Assets
 import TelkomselLogo from '@/assets/Telkomsel_2021_icon.svg.png';
 // Import Font Awesome
@@ -48,7 +48,7 @@ function Main() {
   };
 
   if (isAuthenticated) {
-    navigate('/');
+    return <Navigate to="/" replace />;
   } else {
     return (
       <div className="auth-container d-flex flex-column p-5">

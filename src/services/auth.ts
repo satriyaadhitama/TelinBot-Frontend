@@ -2,6 +2,7 @@ import { User } from '@/types/auth/User';
 import api from './api';
 import { UserLoginState } from '@/types/auth/UserLoginState';
 import { JWTState } from '@/types/auth/JWTState';
+import axios from 'axios';
 
 const login = async (userData: UserLoginState) => {
   // Removing the Authorization header
@@ -23,8 +24,21 @@ const getUserInfo = async (): Promise<User> => {
   return (await api.get('api/auth/users')).data;
 };
 
-const verifyToken = async (refreshToken: string | null) => {
-  return api.post('api/auth/token/verify/', { token: refreshToken });
+const verifyToken = async (
+  refreshToken: string | null | undefined
+): Promise<ApiResponse<{ detail: string }>> => {
+  try {
+    const response = await api.post('api/auth/token/verify/', {
+      refresh: refreshToken,
+    });
+    return response;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return error.response;
+    } else {
+      throw error;
+    }
+  }
 };
 
 export { login, logout, getUserInfo, verifyToken };

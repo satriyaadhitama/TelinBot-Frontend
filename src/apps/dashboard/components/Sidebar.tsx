@@ -5,44 +5,60 @@ import {
   faFileInvoiceDollar,
   faRightFromBracket,
   faChartSimple,
+  faBars,
 } from '@fortawesome/free-solid-svg-icons';
 import { useLogoutHandler } from '@/hooks/auth';
-
+import { useState } from 'react';
 
 function Sidebar() {
-  const logout = useLogoutHandler()
-  
+  const [isActive, setIsActive] = useState(false);
+  const logout = useLogoutHandler();
+
+  const toggleSidebar = () => {
+    setIsActive((prev) => !prev);
+  };
+
   return (
-    <aside id="sidebar">
-      <div className="sidebar-header">
-        <a href="/dashboard" className="sidebar-logo">
-          <img src={TelkomselLogo} alt="" className="sidebar-logo" />
-        </a>
-      </div>
-      <div className="sidebar-link">
-        <a href="/dashboard" className="sidebar-item">
-          <FontAwesomeIcon icon={faChartSimple} className="sidebar-icon" />
-          <span>Aktivitas</span>
-        </a>
-        <a href="/dashboard/finance" className="sidebar-item">
-          <FontAwesomeIcon
-            icon={faFileInvoiceDollar}
-            className="sidebar-icon"
-          />
-          <span>Keuangan</span>
-        </a>
-        <a href='/dashboard/frequently-asked' className="sidebar-item">
-          <FontAwesomeIcon icon={faCircleQuestion} className="sidebar-icon" />
-          <span>FAQ</span>
-        </a>
-      </div>
-      <div className="sidebar-footer">
-        <button className="button button-primary" onClick={logout}>
-          <FontAwesomeIcon icon={faRightFromBracket} className="button-icon" />
-          <span>Keluar</span>
+    <div className={`sidebar-container ${!isActive ? 'collapsed' : ''}`}>
+      <aside className={`sidebar ${!isActive ? 'collapsed' : ''}`}>
+        <div className="sidebar-header">
+          <a href="/dashboard" className="sidebar-logo">
+            <img src={TelkomselLogo} alt="" className="sidebar-logo" />
+          </a>
+        </div>
+        <div className="sidebar-link">
+          <a href="/dashboard" className="sidebar-item">
+            <FontAwesomeIcon icon={faChartSimple} className="sidebar-icon" />
+            <span>Aktivitas</span>
+          </a>
+          <a href="/dashboard/finance" className="sidebar-item">
+            <FontAwesomeIcon
+              icon={faFileInvoiceDollar}
+              className="sidebar-icon"
+            />
+            <span>Keuangan</span>
+          </a>
+          <a href="/dashboard/frequently-asked" className="sidebar-item">
+            <FontAwesomeIcon icon={faCircleQuestion} className="sidebar-icon" />
+            <span>FAQ</span>
+          </a>
+        </div>
+        <div className="sidebar-footer">
+          <button className="button button-primary" onClick={logout}>
+            <FontAwesomeIcon
+              icon={faRightFromBracket}
+              className="button-icon"
+            />
+            <span>Keluar</span>
+          </button>
+        </div>
+      </aside>
+      <div id="sidebar-toggle-icon">
+        <button className="button" onClick={toggleSidebar}>
+          <FontAwesomeIcon icon={faBars} className="icon-rounded" />
         </button>
       </div>
-    </aside>
+    </div>
   );
 }
 

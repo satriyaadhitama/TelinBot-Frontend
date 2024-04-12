@@ -39,7 +39,6 @@
 
 .button {
   font-size: 16px;
-  font-weight: 600;
   display: inline-block;
   outline: none;
   border: none;
@@ -49,11 +48,12 @@
 }
 
 .button-light {
+  font-weight: 600;
   background-color: var(--color-light);
   color: var(--color-primary);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 25px;
-  padding: 0.9rem;
+  padding: 0.7rem;
 }
 
 .button-light:hover {
@@ -65,11 +65,12 @@
 }
 
 .button-primary {
+  font-weight: 600;
   background-color: var(--color-primary);
   color: var(--color-light);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 25px;
-  padding: 0.9rem;
+  padding: 0.7rem;
 }
 
 .button-primary:hover {
@@ -83,8 +84,50 @@
     box-shadow 0.5s ease;
 }
 
+.button-primary-1 {
+  font-weight: 400;
+  background-color: var(--color-light);
+  color: var(--color-primary);
+  border-radius: 20px;
+  padding: 0.5rem;
+}
+
+.button-primary-1:hover {
+  color: var(--color-primary);
+  background-color: var(
+    --color-primary-hover
+  ); /* Lighter or more saturated than --color-primary */
+  transition:
+    color 0.5s ease,
+    background-color 0.5s ease,
+    box-shadow 0.5s ease;
+}
+
+.button-primary-1.active {
+  color: var(--color-light);
+  background-color: var(--color-primary);
+}
+
 .button-primary .button-icon {
   margin-right: 8px;
+}
+
+.button-square-light {
+  border-radius: 5px;
+  border: 1.5px solid var(--color-gray);
+  padding: 7px;
+}
+
+.button-square-light:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(
+    --color-primary-hover
+  ); /* Lighter or more saturated than --color-primary */
+  transition:
+    color 0.5s ease,
+    background-color 0.5s ease,
+    border 0.5s ease;
 }
 
 .conversation-container {
@@ -166,4 +209,45 @@
   font-size: 18px;
   padding: 8px;
   border-radius: 50%;
+}
+
+.chart-tooltip {
+  border-radius: 0.25rem;
+  background: var(--color-primary-dark-1);
+  color: #fff;
+  padding: 0.5rem 1rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.25) 0px 14px 28px,
+    rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  text-align: center;
+}
+
+.dropdown-options {
+  display: inline-block;
+  white-space: nowrap;
+  background-color: white;
+  z-index: 4;
+  position: absolute;
+  border-radius: 5px;
+  margin-top: 2.3rem;
+  box-shadow:
+    rgba(0, 0, 0, 0.02) 0px 1px 3px 0px,
+    rgba(27, 31, 35, 0.15) 0px 0px 0px 1px;
+}
+
+.dropdown-options li {
+  cursor: pointer;
+  padding: 8px 5px;
+}
+
+.dropdown-options li:hover {
+  background-color: var(--color-primary-light-3);
+}
+
+.table .table-row td {
+  vertical-align: middle;
+}
+
+.table .table-row:hover td {
+  background-color: var(--color-primary-light-4);
 }

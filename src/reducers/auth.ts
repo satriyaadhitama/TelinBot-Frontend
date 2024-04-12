@@ -7,15 +7,19 @@ import api from '@/services/api';
 import { JWTState } from '@/types/auth/JWTState';
 import { RootState } from '@/types/auth/RootState';
 
+const initialUser = {
+  id: null,
+  first_name: null,
+  last_name: null,
+  position: null,
+  groups: [],
+};
+
+const initialToken = { access: null, refresh: null };
+
 const initialState: AuthState = {
-  user: {
-    id: null,
-    first_name: null,
-    last_name: null,
-    position: null,
-    groups: [],
-  },
-  token: { access: null, refresh: null },
+  user: initialUser,
+  token: initialToken,
   isAuthenticated: false,
   status: 'idle',
 };
@@ -48,7 +52,14 @@ export const logoutUser = createAsyncThunk(
 const authSlice = createSlice({
   name: 'auth',
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    resetState: (state) => {
+      state.user = initialUser;
+      state.isAuthenticated = false;
+      state.token = initialToken;
+      state.status = 'idle';
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(loginUser.pending, (state) => {
@@ -71,19 +82,14 @@ const authSlice = createSlice({
         state.status = 'failed';
       })
       .addCase(logoutUser.fulfilled, (state) => {
-        state.user = {
-          id: null,
-          first_name: null,
-          last_name: null,
-          position: null,
-          groups: [],
-        };
+        state.user = initialUser;
         state.isAuthenticated = false;
-        state.token = { refresh: null, access: null };
+        state.token = initialToken;
         state.status = 'idle';
       });
   },
 });
 
+export const { resetState } = authSlice.actions;
 // Export reducer
 export default authSlice.reducer;
