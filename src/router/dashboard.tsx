@@ -1,9 +1,9 @@
 import { Overview, Finance, Question } from '@/apps/dashboard/pages';
-import { ProtectedLayout } from '../components';
+import { AuthProtectedLayout } from '../components';
 
 export const dashboardRoutes = {
   path: 'dashboard',
-  element: <ProtectedLayout allowedGroups={['Admin']} />,
+  element: <AuthProtectedLayout allowedGroups={['Admin']} />,
   children: [
     { index: true, element: <Overview /> },
     { path: 'finance', element: <Finance /> },

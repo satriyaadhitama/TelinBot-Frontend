@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '@/types/auth/RootState';
 import { resetState } from '@/reducers/auth';
 
-function AuthLayout() {
+const AuthLayout = () => {
   const refreshToken = useSelector(
     (state: RootState) => state.auth.token?.refresh
   );
@@ -22,9 +22,9 @@ function AuthLayout() {
       }
     };
     checkToken();
-  }, [navigate, refreshToken]);
+  }, [dispatch, navigate, refreshToken]);
 
   return <Outlet />;
-}
+};
 
 export default AuthLayout;
