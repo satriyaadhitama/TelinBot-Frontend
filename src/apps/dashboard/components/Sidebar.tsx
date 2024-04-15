@@ -30,7 +30,7 @@ function Sidebar() {
         <div className="sidebar-link">
           <a href="/dashboard" className="sidebar-item">
             <FontAwesomeIcon icon={faChartSimple} className="sidebar-icon" />
-            <span>Aktivitas</span>
+            <span>Data</span>
           </a>
           <a href="/dashboard/users" className="sidebar-item">
             <FontAwesomeIcon icon={faUser} className="sidebar-icon" />
