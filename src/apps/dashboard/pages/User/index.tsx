@@ -1,12 +1,13 @@
 import React from 'react';
+import Main from './components';
 import { Layout } from '../../components';
 
-function Overview() {
+function User() {
   return (
     <Layout>
-      <div>Overview</div>
+      <Main />
     </Layout>
   );
 }
 
-export default Overview;
+export default User;

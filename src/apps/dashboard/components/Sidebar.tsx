@@ -6,6 +6,7 @@ import {
   faRightFromBracket,
   faChartSimple,
   faBars,
+  faUser
 } from '@fortawesome/free-solid-svg-icons';
 import { useLogoutHandler } from '@/hooks/auth';
 import { useState } from 'react';
@@ -30,6 +31,10 @@ function Sidebar() {
           <a href="/dashboard" className="sidebar-item">
             <FontAwesomeIcon icon={faChartSimple} className="sidebar-icon" />
             <span>Aktivitas</span>
+          </a>
+          <a href="/dashboard/users" className="sidebar-item">
+            <FontAwesomeIcon icon={faUser} className="sidebar-icon" />
+            <span>Pengguna</span>
           </a>
           <a href="/dashboard/finance" className="sidebar-item">
             <FontAwesomeIcon
