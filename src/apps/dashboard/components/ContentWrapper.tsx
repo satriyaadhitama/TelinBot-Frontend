@@ -6,8 +6,19 @@ interface ContentWrapperProps {
 }
 
 const ContentWrapper: React.FC<ContentWrapperProps> = ({ title, children }) => {
+  const titledStyle = {
+    padding: '1.5rem 2.5rem',
+  };
+
+  const untitledStyle = {
+    padding: '1.5rem 1rem',
+  };
+
   return (
-    <div className="content-wrapper">
+    <div
+      className="content-wrapper"
+      style={title ? titledStyle : untitledStyle}
+    >
       {title && <h4 className="content-wrapper-title">{title}</h4>}
       {children}
     </div>
