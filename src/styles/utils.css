@@ -102,3 +102,21 @@
   padding: 10px;
   color: #808080;
 }
+
+.text-color-primary {
+  color: var(--color-primary);
+}
+
+.bubble-text-message {
+  color: var(--color-dark);
+  font-size: 12px;
+  margin: 0;
+}
+
+.bubble-time {
+  display: block;
+  font-size: 10px;
+  color: grey;
+}
+
+
