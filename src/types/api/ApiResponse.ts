@@ -1,4 +1,4 @@
-interface ApiResponse<T> {
+export interface ApiResponse<T> {
   data: T; // Use a generic type T for data
   status: number;
   statusText: string;

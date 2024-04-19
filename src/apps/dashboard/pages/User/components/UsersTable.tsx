@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -6,15 +6,46 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import ContentWrapper from '@/apps/dashboard/components/ContentWrapper';
+import { getUsers } from '@/services/auth';
+import { PaginatedResponse } from '@/types/api/PaginatedResponse';
+import { UserData } from '@/types/auth/User';
 
-type ActiveButtonState = 'allUsers' | 'online';
+type ActiveButtonState = 'allUsers' | 'online' | 'offline';
+
+interface OnlineStatusProps {
+  isOnline?: boolean;
+  lastLogin: string | null;
+}
+
+const OnlineStatus: React.FC<OnlineStatusProps> = ({ isOnline, lastLogin }) => {
+  if (isOnline) {
+    return <div className="text-success">Online</div>;
+  }
+  return <div className="text-danger">Offline</div>;
+};
 
 function UsersTable() {
+  const [data, setData] = useState<PaginatedResponse<UserData[]> | null>(null);
   const [activeButton, setActiveButton] =
     useState<ActiveButtonState>('allUsers');
+
   const handleButtonClick = (buttonName: ActiveButtonState) => {
     setActiveButton(buttonName);
   };
+
+  useEffect(() => {
+    const fetchUsers = async () => {
+      const isOnline =
+        activeButton === 'online'
+          ? true
+          : activeButton === 'offline'
+            ? false
+            : undefined;
+      const responseData = await getUsers(isOnline);
+      setData(responseData);
+    };
+    fetchUsers();
+  }, [activeButton]);
 
   return (
     <ContentWrapper title="USERS TABLE">
@@ -31,6 +62,12 @@ function UsersTable() {
             className={`button button-primary-1 mx-2 ${activeButton === 'online' ? 'active' : ''}`}
           >
             Online
+          </button>
+          <button
+            onClick={() => handleButtonClick('offline')}
+            className={`button button-primary-1 mx-2 ${activeButton === 'offline' ? 'active' : ''}`}
+          >
+            Offline
           </button>
         </div>
         <div style={{ maxWidth: '15rem' }}>
@@ -49,30 +86,22 @@ function UsersTable() {
             </tr>
           </thead>
           <tbody>
-            <tr className="table-row">
-              <td>Mark</td>
-              <td>Developer</td>
-              <td>mark@email.com</td>
-              <td>+628155013121</td>
-              <td>Online</td>
-            </tr>
-            <tr className="table-row">
-              <td>Mark</td>
-              <td>Developer</td>
-              <td>mark@email.com</td>
-              <td>+628155013121</td>
-              <td>Online</td>
-            </tr>
-            <tr className="table-row">
-              <td>Mark</td>
-              <td>Developer</td>
-              <td>mark@email.com</td>
-              <td>+628155013121</td>
-              <td>
-                <span className=" d-block ">Last Seen</span>
-                <span>30d ago</span>
-              </td>
-            </tr>
+            {data?.results.map((item) => {
+              return (
+                <tr className="table-row">
+                  <td>{item.last_name}</td>
+                  <td>{item.position}</td>
+                  <td>{item.email}</td>
+                  <td>{item.phone_number}</td>
+                  <td>
+                    <OnlineStatus
+                      isOnline={item.is_online}
+                      lastLogin={item.last_login}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
@@ -82,7 +111,7 @@ function UsersTable() {
             <FontAwesomeIcon icon={faChevronLeft} />
           </button>
           <div className="mx-3" style={{ padding: '7px 0px' }}>
-            <span>1 of 10</span>
+            <span>1</span>
           </div>
           <button className="button button-square-light">
             <FontAwesomeIcon icon={faChevronRight} />

@@ -5,7 +5,7 @@ import { faCommentDots } from '@fortawesome/free-regular-svg-icons';
 import { faChevronDown, faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { ChatConversation } from '@/components';
 import { useSelector } from 'react-redux';
-import { RootState } from 'src/store';
+import { RootState } from '@/types/auth/RootState';
 
 interface ChatContextData {
   toggleChatBox: () => void;
@@ -84,9 +84,11 @@ const UserChatForm = () => {
 
 const SignInRequired = () => {
   return (
-    <div className='d-flex flex-column align-items-center'>
+    <div className="d-flex flex-column align-items-center">
       <p>Authentication required to use Chatbot</p>
-      <a href="/auth/sign-in" className='button button-primary'>Sign In</a>
+      <a href="/auth/sign-in" className="button button-primary">
+        Sign In
+      </a>
     </div>
   );
 };
@@ -125,8 +127,8 @@ const Chat = () => {
 const ChatBox = () => {
   const { toggleChatBox, isLiveChatOpen } = useContext(ChatContext);
 
-  const { isAuthenticated } = useSelector(
-    (state: RootState) => state.auth.value
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
   );
 
   return (

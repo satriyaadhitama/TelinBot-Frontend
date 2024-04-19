@@ -37,23 +37,27 @@
   box-shadow: none;
 }
 
+.btn-icon {
+  padding: 8px !important;
+}
+
 .button {
   font-size: 16px;
   display: inline-block;
   outline: none;
   border: none;
   text-decoration: none;
+  padding: 10px 15px;
   letter-spacing: -0.03em;
   background-color: transparent;
 }
 
 .button-light {
-  font-weight: 600;
+  font-weight: 400;
   background-color: var(--color-light);
   color: var(--color-primary);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 25px;
-  padding: 0.7rem;
 }
 
 .button-light:hover {
@@ -65,23 +69,57 @@
 }
 
 .button-primary {
-  font-weight: 600;
+  font-weight: 400;
   background-color: var(--color-primary);
   color: var(--color-light);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
   border-radius: 25px;
-  padding: 0.7rem;
 }
 
 .button-primary:hover {
-  color: var(--color-primary);
   background-color: var(
-    --color-primary-hover
+    --color-primary-dark-1
   ); /* Lighter or more saturated than --color-primary */
   transition:
-    color 0.5s ease,
-    background-color 0.5s ease,
-    box-shadow 0.5s ease;
+    color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.button-success {
+  font-weight: 400;
+  background-color: var(--color-success);
+  color: var(--color-light);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 25px;
+}
+
+.button-success:hover {
+  background-color: var(
+    --color-success-dark
+  ); /* Lighter or more saturated than --color-primary */
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.button-primary-blue {
+  font-weight: 400;
+  background-color: var(--color-primary-blue);
+  color: var(--color-light);
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  border-radius: 25px;
+}
+
+.button-primary-blue:hover {
+  background-color: var(
+    --color-primary-blue-dark
+  ); /* Lighter or more saturated than --color-primary */
+  transition:
+    color 0.3s ease,
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .button-primary-1 {
@@ -89,7 +127,6 @@
   background-color: var(--color-light);
   color: var(--color-primary);
   border-radius: 20px;
-  padding: 0.5rem;
 }
 
 .button-primary-1:hover {
@@ -178,7 +215,7 @@
 
 .form-control {
   border: 0 solid #ccc;
-  border-width: 0 0.2px 2px 0.2px; /* Preserves unique border widths */
+  border-width: 2px; /* Preserves unique border widths */
   border-radius: 20px;
   outline: none;
   box-sizing: border-box; /* Ensures the padding and border are included in the element's total width and height */
@@ -250,4 +287,110 @@
 
 .table .table-row:hover td {
   background-color: var(--color-primary-light-4);
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  background-color: var(--color-light);
+  min-width: 250px;
+  min-height: 100px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 22px;
+  border-radius: 12px 12px 0 0;
+  background-color: var(--color-bg-neutral);
+  border-bottom: 1px solid var(--color-medium-gray-1);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 25px 20px;
+}
+
+.icon {
+  font-size: 25px;
+  padding: 10px 12px;
+  border-radius: 50%;
+  background-color: var(--color-light);
+  transition: background-color 0.3s ease;
+}
+
+.icon:hover {
+  background-color: var(--color-primary-light-3);
+}
+
+.faq-container {
+  border-radius: 15px;
+  box-shadow:
+    rgba(0, 0, 0, 0.16) 0px 3px 6px,
+    rgba(0, 0, 0, 0.23) 0px 3px 6px;
+}
+
+.faq-header {
+  border-radius: 15px;
+  padding: 15px 15px;
+  display: flex;
+  align-items: center;
+  background-color: var(--color-bg-neutral);
+  justify-content: space-between;
+  transition: border-radius 0.5s ease-in;
+}
+
+.faq-header.active {
+  border-bottom: 0.2px solid var(--color-medium-gray-1);
+  border-radius: 15px 15px 0 0;
+  transition:
+    border-radius 0.5s ease-out,
+    border-bottom 0.5s ease-out;
+}
+
+.faq-header:hover {
+  background-color: var(--color-medium-gray);
+}
+
+.faq-content {
+  overflow: hidden;
+  padding: 0 10px;
+  max-height: 0;
+  opacity: 0;
+  transition:
+    padding 0.5s ease,
+    max-height 0.5s ease,
+    opacity 0.5s ease-out;
+}
+
+.faq-content.active {
+  padding: 10px;
+  max-height: 500px; /* Adjust this value based on your content's typical size */
+  opacity: 1;
+  transition:
+    max-height 0.5s ease,
+    opacity 0.5s ease-in;
+}
+
+.faq-question {
+  font-size: 16px;
+}
+
+.faq-answer {
+  font-size: 12px;
 }

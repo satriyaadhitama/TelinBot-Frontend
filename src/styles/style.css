@@ -29,6 +29,12 @@
   --color-bg-white: #fbfbfb;
   --color-gray: #707070;
   --color-medium-gray: #d0d0d0;
+  --color-medium-gray-1: #bcbcbc;
+
+  --color-success: #28a745;
+  --color-success-dark: #218838;
+  --color-primary-blue: #007bff;
+  --color-primary-blue-dark: #0056b3;
 
   --padding-xs: 0px 20px;
   --padding-sm: 0px 30px;

@@ -107,17 +107,16 @@
 }
 
 .finance-report-container {
-  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border-radius: 20px;
-  cursor: pointer;
+  padding: 0 20px;
+  min-height: 70px;
   box-shadow:
     rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
     rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
   transition: background-color 0.3s ease;
-}
-
-.finance-report-container:hover {
-  background-color: var(--color-primary-light-3);
 }
 
 @media (max-width: 1100px) {

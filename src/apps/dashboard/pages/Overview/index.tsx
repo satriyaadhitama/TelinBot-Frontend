@@ -1,10 +1,11 @@
 import React from 'react';
 import { Layout } from '../../components';
+import Main from './components';
 
 function Overview() {
   return (
     <Layout>
-      <div>Overview</div>
+      <Main />
     </Layout>
   );
 }

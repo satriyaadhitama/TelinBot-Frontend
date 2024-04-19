@@ -9,29 +9,40 @@ import {
 } from 'recharts';
 import { format, parseISO, subDays } from 'date-fns';
 import Dropdown from '@/components/Dropdown';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import ContentWrapper from '@/apps/dashboard/components/ContentWrapper';
+import { DropdownOption } from '@/types/components/DropdownOption';
+import { getUsersHistory } from '@/services/auth';
+import { CustomTooltipProps } from '@/types/components/CustomTooltip';
+import { ChartDataProps } from '@/types/data/ChartDataProps';
+import { DataProps } from '@/types/data/DataProps';
+import { getMaxValue } from '../../helpers';
 
-interface ChartData {
-  date: string; // ISO date string
-  value: number;
-}
+type FilterType = 'week' | 'month';
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min); // Ensure the minimum is rounded up to the nearest whole number
-  max = Math.floor(max); // Ensure the maximum is rounded down to the nearest whole number
-  return Math.floor(Math.random() * (max - min + 1)) + min; // The maximum is inclusive and the minimum is inclusive
-}
+const getPastData = (filter: FilterType, data: DataProps[]): DataProps[] => {
+  const filters: { [key in FilterType]: number } = { week: 7, month: 30 };
+  const currentDate = new Date();
+  let resultData: DataProps[] = [];
 
-const data: ChartData[] = [];
-for (let num = 7; num >= 0; num--) {
-  data.push({
-    date: subDays(new Date(), num).toISOString().substr(0, 10),
-    value: getRandomInt(0, 50),
-  });
-}
+  if (!data) return [];
 
-function CustomTooltip({ active, payload, label }) {
+  for (let i = filters[filter]; i >= 0; i--) {
+    const date = new Date(currentDate);
+    date.setDate(date.getDate() - i);
+    const dateString = date.toISOString().split('T')[0] + 'T00:00:00Z'; // Format to match the data
+    // Find the data entry for the given date or use default value 0
+    const dataEntry = data.find((d) => d.x === dateString);
+    resultData.push({ x: dateString, y: dataEntry ? dataEntry.y : 0 });
+  }
+  return resultData;
+};
+
+const CustomTooltip: React.FC<CustomTooltipProps> = ({
+  active,
+  payload,
+  label,
+}) => {
   if (active && payload && payload.length) {
     return (
       <div className="chart-tooltip">
@@ -43,9 +54,9 @@ function CustomTooltip({ active, payload, label }) {
     );
   }
   return null;
-}
+};
 
-const Chart = () => {
+const Chart: React.FC<ChartDataProps> = ({ data }) => {
   return (
     <ResponsiveContainer width="100%" height={400}>
       <AreaChart data={data}>
@@ -58,14 +69,14 @@ const Chart = () => {
 
         <Area
           type="monotone"
-          dataKey="value"
+          dataKey="y"
           stroke="#ff7373"
           fillOpacity={1}
           fill="url(#color)"
         />
 
         <XAxis
-          dataKey="date"
+          dataKey="x"
           axisLine={false}
           tickLine={false}
           tickFormatter={(str) => {
@@ -78,7 +89,7 @@ const Chart = () => {
         />
 
         <YAxis
-          dataKey="value"
+          dataKey="y"
           label={{
             value: 'Total Users',
             angle: -90,
@@ -86,8 +97,9 @@ const Chart = () => {
           }}
           axisLine={false}
           tickLine={false}
-          tickCount={8}
+          tickCount={5}
           tickFormatter={(number) => `${number}`}
+          domain={[0, getMaxValue(data)]}
         />
 
         <Tooltip content={<CustomTooltip />} />
@@ -99,24 +111,41 @@ const Chart = () => {
 };
 
 function UsersChartHistory() {
-  const options = ['Weekly', 'Monthly', 'Yearly'];
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [data, setData] = useState<DataProps[] | []>([]);
+  const options = [
+    { name: 'Weekly', value: 'week' },
+    { name: 'Monthly', value: 'month' },
+  ];
+  const [selectedOption, setSelectedOption] = useState<DropdownOption>(
+    options[0]
+  );
 
-  const handleSelect = (option) => {
+  const handleSelect = (option: DropdownOption) => {
     setSelectedOption(option);
-    console.log(option);
   };
+
+  useEffect(() => {
+    const fetchUsersHistory = async (filter: string) => {
+      const responseData = await getUsersHistory(filter);
+      const formattedData = responseData?.map((item) => ({
+        x: item.date,
+        y: item.value,
+      }));
+      setData(getPastData(selectedOption.value, formattedData));
+    };
+    fetchUsersHistory(selectedOption.value);
+  }, [selectedOption]);
 
   return (
     <ContentWrapper title="USERS TRAFFIC">
       <div className="d-flex justify-content-end mb-3">
         <Dropdown
-          placeholder={selectedOption}
+          placeholder={selectedOption.name}
           options={options}
           onSelect={handleSelect}
         />
       </div>
-      <Chart />
+      <Chart data={data} />
     </ContentWrapper>
   );
 }

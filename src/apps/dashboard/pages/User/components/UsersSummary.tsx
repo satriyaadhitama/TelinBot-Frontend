@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import ContentWrapper from '@/apps/dashboard/components/ContentWrapper';
+import { getUsers } from '@/services/auth';
 
+interface Data {
+  currentOnline: number | undefined;
+  todayOnline: number | undefined;
+  availableUsers: number | undefined;
+}
 interface CardProps {
   title: string;
-  total: number;
+  total: number | undefined;
 }
 
 const SummaryCard: React.FC<CardProps> = ({ title, total }) => {
@@ -31,12 +37,35 @@ const SummaryCard: React.FC<CardProps> = ({ title, total }) => {
 };
 
 function UsersSummary() {
+  const [data, setData] = useState<Data | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch current online users
+      const responseCurrentOnline = await getUsers(true);
+      const countCurrentOnline = responseCurrentOnline?.results?.length;
+      // Fetch Today Online
+      const responseTodayOnline = await getUsers(undefined, true);
+      const countTodayOnline = responseTodayOnline?.results?.length;
+      // Fetch Available users
+      const responseAvailableUsers = await getUsers();
+      const countAvailableUsers = responseAvailableUsers.results?.length;
+
+      setData({
+        currentOnline: countCurrentOnline,
+        todayOnline: countTodayOnline,
+        availableUsers: countAvailableUsers,
+      });
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="">
       <div className="row">
-        <SummaryCard title="Current Online" total={5} />
-        <SummaryCard title="Today Activity" total={30} />
-        <SummaryCard title="Available Users" total={100} />
+        <SummaryCard title="Current Online" total={data?.currentOnline} />
+        <SummaryCard title="Today Activity" total={data?.todayOnline} />
+        <SummaryCard title="Available Users" total={data?.availableUsers} />
       </div>
     </div>
   );

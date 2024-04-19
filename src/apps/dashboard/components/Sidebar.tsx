@@ -6,7 +6,7 @@ import {
   faRightFromBracket,
   faChartSimple,
   faBars,
-  faUser
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { useLogoutHandler } from '@/hooks/auth';
 import { useState } from 'react';

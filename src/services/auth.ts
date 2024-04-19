@@ -1,8 +1,10 @@
-import { User } from '@/types/auth/User';
 import api from './api';
+import axios from 'axios';
+import { User, UserData } from '@/types/auth/User';
 import { UserLoginState } from '@/types/auth/UserLoginState';
 import { JWTState } from '@/types/auth/JWTState';
-import axios from 'axios';
+import { ApiResponse } from '@/types/api/ApiResponse';
+import { PaginatedResponse } from '@/types/api/PaginatedResponse';
 
 const login = async (userData: UserLoginState) => {
   // Removing the Authorization header
@@ -21,14 +23,14 @@ const logout = async (refreshToken: string | null | undefined) => {
 };
 
 const getUserInfo = async (): Promise<User> => {
-  return (await api.get('api/auth/users')).data;
+  return (await api.get('api/auth/user')).data;
 };
 
 const verifyToken = async (
   refreshToken: string | null | undefined
 ): Promise<ApiResponse<{ detail: string }>> => {
   try {
-    const response = await api.post('api/auth/token/verify/', {
+    const response = await api.post('api/auth/token/verify', {
       refresh: refreshToken,
     });
     return response;
@@ -41,4 +43,19 @@ const verifyToken = async (
   }
 };
 
-export { login, logout, getUserInfo, verifyToken };
+const getUsers = async (
+  isOnline?: boolean,
+  today?: boolean
+): Promise<PaginatedResponse<UserData[] | null>> => {
+  const onlineParam = isOnline !== undefined ? `isOnline=${isOnline}` : '';
+  const todayParam = today ? '&today=true' : '';
+  return (await api.get(`api/auth/users?${onlineParam}${todayParam}`)).data;
+};
+
+const getUsersHistory = async (
+  filter: string
+): Promise<{ date: string; value: number }[] | null> => {
+  return (await api.get(`api/auth/users/history?filter=${filter}`)).data;
+};
+
+export { login, logout, getUserInfo, getUsers, verifyToken, getUsersHistory };

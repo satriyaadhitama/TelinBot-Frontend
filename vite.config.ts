@@ -20,6 +20,7 @@ export default defineConfig({
       '@/services': resolve(root, 'services'),
       '@/types': resolve(root, 'types'),
       '@/hooks': resolve(root, 'hooks'),
+      '@/utils': resolve(root, 'utils'),
     },
   },
 });
