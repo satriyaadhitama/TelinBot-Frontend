@@ -1,7 +1,5 @@
 import ContentWrapper from '@/apps/dashboard/components/ContentWrapper';
-import Dropdown from '@/components/Dropdown';
-import { getTrafficCDN } from '@/services/overview';
-import { DropdownOption } from '@/types/components/DropdownOption';
+import { getCDNRevenue, getTrafficCDN } from '@/services/overview';
 import { convertGBtoTB, truncate } from '@/utils/format';
 import React, { useEffect, useState } from 'react';
 import {
@@ -15,6 +13,8 @@ import {
 } from 'recharts';
 import { getMaxValue } from '../../helpers';
 import { CustomTooltipProps } from '@/types/components/CustomTooltip';
+import { Option } from '@/types/components/Option';
+import Select from 'react-select';
 
 interface DataProps {
   x: number;
@@ -23,6 +23,7 @@ interface DataProps {
 
 interface ChartProps {
   data: DataProps[];
+  summary: string;
   height?: number;
 }
 
@@ -53,14 +54,18 @@ const CustomTooltip: React.FC<CustomTooltipProps> = ({
     return (
       <div className="chart-tooltip">
         <h4 className="fs-md-1 fst-italic">{label}</h4>
-        <span className="fs-rg">{payload[0].value} TBs</span>
+        <span className="fs-rg">Total: {payload[0].value}</span>
       </div>
     );
   }
   return null;
 };
 
-const HorizontalChart: React.FC<ChartProps> = ({ data, height = 250 }) => {
+const HorizontalChart: React.FC<ChartProps> = ({
+  data,
+  summary,
+  height = 250,
+}) => {
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart
@@ -72,7 +77,10 @@ const HorizontalChart: React.FC<ChartProps> = ({ data, height = 250 }) => {
         }}
       >
         <XAxis type="number" domain={[0, getMaxValue(data)]}>
-          <Label value={'Usage (TB)'} dy={30} />
+          <Label
+            value={summary === 'usage' ? 'Usage (TB)' : 'IDR (Mil)'}
+            dy={30}
+          />
         </XAxis>
         <YAxis
           type="category"
@@ -88,34 +96,69 @@ const HorizontalChart: React.FC<ChartProps> = ({ data, height = 250 }) => {
   );
 };
 
-function FactTrafficCDN() {
-  const options = [
-    { name: 'Customer', value: 'customer_name' },
-    { name: 'Product', value: 'product_name' },
-    { name: 'Partner', value: 'partner' },
-  ];
+const filterOptions: Option[] = [
+  { label: 'Customer', value: 'customer_name' },
+  { label: 'Product', value: 'product_name' },
+  { label: 'Partner', value: 'partner' },
+];
+
+const summaryOptions: Option[] = [
+  { label: 'Revenue', value: 'revenue' },
+  { label: 'Usage', value: 'usage' },
+];
+
+function FactTrafficCDN({ filters }) {
   const [data, setData] = useState([]);
   const [totalQueries, setTotalQueries] = useState(0);
-  const [selectedOption, setSelectedOption] = useState(options[0]);
+  const [selectedFilterOption, setSelectedFilterOption] = useState(
+    filterOptions[0]
+  );
+  const [selectedSummaryOption, setSelectedSummaryOption] = useState(
+    summaryOptions[0]
+  );
 
-  const handleSelect = (option: DropdownOption) => {
-    setSelectedOption(option);
+  const handleSelectFilter = (option: Option) => {
+    setSelectedFilterOption(option);
+  };
+
+  const handleSelectSummary = (option: Option) => {
+    setSelectedSummaryOption(option);
   };
 
   useEffect(() => {
     const trafficCDNSummary = async () => {
-      const responseData = await getTrafficCDN(selectedOption.value, 5);
+      const responseData =
+        selectedSummaryOption.value === 'usage'
+          ? await getTrafficCDN(
+              selectedFilterOption.value,
+              filters.year,
+              filters.month,
+              filters.type,
+              5
+            )
+          : await getCDNRevenue(
+              selectedFilterOption.value,
+              filters.year,
+              filters.month,
+              filters.type,
+              5
+            );
+
       const totalQueries = responseData.total_queries;
       const data = responseData.data;
+
       const convertedData = data.map((item) => ({
-        x: convertGBtoTB(item.total_usage),
+        x:
+          selectedSummaryOption.value === 'usage'
+            ? convertGBtoTB(item.total)
+            : Math.abs(item.total) / 1_000_000,
         y: item.name,
       }));
       setTotalQueries(totalQueries);
       setData(convertedData);
     };
     trafficCDNSummary();
-  }, [selectedOption]);
+  }, [selectedFilterOption, selectedSummaryOption, filters]);
 
   return (
     <ContentWrapper title="Traffic CDN Summary">
@@ -123,17 +166,39 @@ function FactTrafficCDN() {
         <p>
           From <strong>{totalQueries}</strong> Queries
         </p>
-        <div className="d-flex flex-row align-items-center">
-          <span className="mx-2">Summarize By</span>
-          <Dropdown
-            placeholder={selectedOption.name}
-            options={options}
-            onSelect={handleSelect}
-          />
+        <div className="row d-flex gy-2">
+          <div className="col-12 col-md-6">
+            <div className="d-flex flex-row align-items-center justify-content-end">
+              <span className="fst-italic fw-bold mx-2">Summary</span>
+              <Select
+                value={selectedSummaryOption}
+                onChange={handleSelectSummary}
+                options={summaryOptions}
+              />
+            </div>
+          </div>
+          <div className="col-12 col-md-6">
+            <div className="d-flex flex-row align-items-center justify-content-end">
+              <span className="fst-italic fw-bold mx-2">Filter</span>
+              <Select
+                value={selectedFilterOption}
+                onChange={handleSelectFilter}
+                options={filterOptions}
+              />
+            </div>
+          </div>
         </div>
       </div>
       <div>
-        <HorizontalChart data={data} height={250} />
+        {totalQueries > 0 ? (
+          <HorizontalChart
+            data={data}
+            height={250}
+            summary={selectedSummaryOption.value}
+          />
+        ) : (
+          <h5 className="text-secondary">No record found</h5>
+        )}
       </div>
     </ContentWrapper>
   );

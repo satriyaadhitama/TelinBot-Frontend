@@ -16,7 +16,6 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useMemo,
   useState,
 } from 'react';
 
@@ -102,7 +101,11 @@ const ModalAction: React.FC<ModalEditProps> = ({
   };
 
   return (
-    <Modal title="Edit FAQ" isOpen={isOpen} close={closeFn}>
+    <Modal
+      title={`${id ? 'Edit' : 'Create New'} FAQ`}
+      isOpen={isOpen}
+      close={closeFn}
+    >
       <div style={{ width: '30rem' }}>
         <form action="" onSubmit={id ? handleSubmitEdit : handleSubmitCreate}>
           <div className="mb-3">
@@ -150,13 +153,23 @@ const ModalAction: React.FC<ModalEditProps> = ({
           </div>
 
           <div className="d-flex justify-content-center">
-            <button
-              type="submit"
-              className="btn btn-warning"
-              style={{ width: 200 }}
-            >
-              Edit
-            </button>
+            {id ? (
+              <button
+                type="submit"
+                className="btn btn-warning"
+                style={{ width: 200 }}
+              >
+                Edit
+              </button>
+            ) : (
+              <button
+                type="submit"
+                className="btn btn-primary"
+                style={{ width: 200 }}
+              >
+                Submit
+              </button>
+            )}
           </div>
         </form>
       </div>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 
 // Define the props type
 type DropdownProps = {
-  placeholder?: string; // Optional string
+  placeholder?: any; // Optional string
   options: DropdownOption[]; // Array of strings
   onSelect: (option: DropdownOption) => void; // Function that takes a string
 };

@@ -3,7 +3,7 @@ import { companyProfileRoutes } from './company-profile';
 import { dashboardRoutes } from './dashboard';
 import { authRoutes } from './auth';
 
-const routes = [companyProfileRoutes, dashboardRoutes, ...authRoutes];
+const routes = [companyProfileRoutes, dashboardRoutes, authRoutes];
 
 const router = createBrowserRouter(routes);
 

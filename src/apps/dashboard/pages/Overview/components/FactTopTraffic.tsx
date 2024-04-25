@@ -91,45 +91,30 @@ const Chart: React.FC<ChartDataProps> = ({ data }) => {
   );
 };
 
-function FactTopTraffic() {
+function FactTopTraffic({ filters }) {
   const [data, setData] = useState([]);
-
-  const options = [
-    { name: '2021', value: 2021 },
-    { name: '2022', value: 2022 },
-    { name: '2023', value: 2023 },
-    { name: '2024', value: 2024 },
-  ];
-  const [selectedOption, setSelectedOption] = useState(options[0]);
-
-  const handleSelect = (option: DropdownOption) => {
-    setSelectedOption(option);
-  };
 
   useEffect(() => {
     const yearlyBandwidth = async () => {
-      const data = await getTopTrafficYearly(selectedOption.value);
+      // console.log(selectedOption.value, year)
+      const data = await getTopTrafficYearly(filters.year);
       const convertedData = data.map((item) => ({
         x: convertGBtoTB(item.bandwidth),
         y: item.month,
       }));
-      console.log(convertedData);
       setData(convertedData);
     };
 
     yearlyBandwidth();
-  }, [selectedOption]);
+  }, [filters]);
   return (
     <ContentWrapper title="Fact Top Traffic">
-      <div className="d-flex justify-content-end mb-3">
-        <Dropdown
-          placeholder={selectedOption.name}
-          options={options}
-          onSelect={handleSelect}
-        />
-      </div>
       <div>
-        <Chart data={data} />
+        {data.length > 0 ? (
+          <Chart data={data} />
+        ) : (
+          <h5 className=" text-secondary">No record found</h5>
+        )}
       </div>
     </ContentWrapper>
   );

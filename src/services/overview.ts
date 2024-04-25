@@ -5,18 +5,64 @@ const getTopTrafficYearly = async (year: number) => {
   return response.data;
 };
 
-const getTrafficCDN = async (category: string, length?: number) => {
+const getTrafficCDN = async (
+  category: string,
+  year: number,
+  month: number,
+  type: number,
+  length?: number
+) => {
   if (length) {
     const response = await api.get(
-      `/api/services/traffic-cdn?category=${category}&length=${length}`
+      `/api/services/traffic-cdn?year=${year}&month=${month}&type=${type}&category=${category}&length=${length}`
     );
     return response.data;
   } else {
     const response = await api.get(
-      `/api/services/traffic-cdn?category=${category}`
+      `/api/services/traffic-cdn?year=${year}&month=${month}&type=${type}&category=${category}`
     );
     return response.data;
   }
 };
 
-export { getTopTrafficYearly, getTrafficCDN };
+const getCDNRevenue = async (
+  category: string,
+  year: number,
+  month: number,
+  type: number,
+  length?: number
+) => {
+  if (length) {
+    const response = await api.get(
+      `/api/services/top-cdn?year=${year}&month=${month}&type=${type}&category=${category}&length=${length}`
+    );
+    return response.data;
+  } else {
+    const response = await api.get(
+      `/api/services/top-cdn?year=${year}&month=${month}&type=${type}&category=${category}`
+    );
+    return response.data;
+  }
+};
+
+const getRevenue = async (year: number, month: number, type: string) => {
+  const response = api.get(
+    `/api/services/new-cust-region/revenue/?year=${year}&month=${month}&type=${type}`
+  );
+  return (await response).data;
+};
+
+const getGrossProfit = async (year: number, month: number, type: string) => {
+  const response = api.get(
+    `/api/services/new-cust-region/gross-profit/?year=${year}&month=${month}&type=${type}`
+  );
+  return (await response).data;
+};
+
+export {
+  getTopTrafficYearly,
+  getTrafficCDN,
+  getRevenue,
+  getGrossProfit,
+  getCDNRevenue,
+};

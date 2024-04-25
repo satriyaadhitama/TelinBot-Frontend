@@ -1,8 +1,9 @@
-import { Login } from '@/apps/auth/pages';
+import { Login, Register } from '@/apps/auth/pages';
 
-export const authRoutes = [
-  {
-    path: '/auth/login',
-    element: <Login />,
-  },
-];
+export const authRoutes = {
+  path: '/',
+  children: [
+    { path: 'auth/login', element: <Login /> },
+    { path: 'auth/register', element: <Register /> },
+  ],
+};

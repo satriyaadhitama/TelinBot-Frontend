@@ -52,7 +52,7 @@ function Main() {
   } else {
     return (
       <div className="auth-container d-flex flex-column p-5">
-        <h1 className="text-color-primary text-center mb-4 fw-bold">Sign In</h1>
+        <h1 className="text-color-primary text-center mb-4 fw-bold">LOGIN</h1>
         <a href="/" className="align-self-center mb-4">
           <img
             src={TelkomselLogo}
@@ -81,7 +81,7 @@ function Main() {
               We'll never share your email with anyone else.
             </div>
           </div>
-          <div className="mb-4">
+          <div className="mb-3">
             <div className="input-with-icon">
               <FontAwesomeIcon icon={faLock} className="form-control-icon" />
               <input
@@ -98,6 +98,14 @@ function Main() {
             Sign In
           </button>
         </form>
+        <div className="d-flex justify-content-center mt-4">
+          <p style={{ fontSize: 14 }}>
+            Doesnt have account? &nbsp;
+            <a href="/auth/register" className=" text-primary">
+              Create account now
+            </a>
+          </p>
+        </div>
       </div>
     );
   }

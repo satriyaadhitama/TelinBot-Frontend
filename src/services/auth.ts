@@ -18,6 +18,12 @@ const login = async (userData: UserLoginState) => {
   }
 };
 
+const register = async (formData: FormData) => {
+  await api.post('api/auth/register', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
 const logout = async (refreshToken: string | null | undefined) => {
   await api.post('api/auth/logout', { refresh: refreshToken });
 };
@@ -58,4 +64,12 @@ const getUsersHistory = async (
   return (await api.get(`api/auth/users/history?filter=${filter}`)).data;
 };
 
-export { login, logout, getUserInfo, getUsers, verifyToken, getUsersHistory };
+export {
+  login,
+  register,
+  logout,
+  getUserInfo,
+  getUsers,
+  verifyToken,
+  getUsersHistory,
+};
