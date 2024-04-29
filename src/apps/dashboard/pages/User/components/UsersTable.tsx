@@ -7,8 +7,8 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import ContentWrapper from '@/apps/dashboard/components/ContentWrapper';
 import { getUsers } from '@/services/auth';
-import { PaginatedResponse } from '@/types/api/PaginatedResponse';
 import { UserData } from '@/types/auth/User';
+import { PaginatedNumberResponse } from '@/types/api/PaginatedNumberResponse';
 
 type ActiveButtonState = 'allUsers' | 'online' | 'offline';
 
@@ -25,25 +25,40 @@ const OnlineStatus: React.FC<OnlineStatusProps> = ({ isOnline, lastLogin }) => {
 };
 
 function UsersTable() {
-  const [data, setData] = useState<PaginatedResponse<UserData[]> | null>(null);
+  const [data, setData] = useState<PaginatedNumberResponse<UserData[]>>();
   const [activeButton, setActiveButton] =
     useState<ActiveButtonState>('allUsers');
+  const [page, setPage] = useState(1);
 
   const handleButtonClick = (buttonName: ActiveButtonState) => {
     setActiveButton(buttonName);
   };
 
+  const nextPage = () => {
+    if (data?.next) {
+      setPage((prev) => prev + 1);
+    }
+  };
+
+  const prevPage = () => {
+    if (data?.previous) {
+      setPage((prev) => prev - 1);
+    }
+  };
+
   useEffect(() => {
+    const statusMap = {
+      online: true,
+      offline: false,
+      allUsers: undefined,
+    };
+
     const fetchUsers = async () => {
-      const isOnline =
-        activeButton === 'online'
-          ? true
-          : activeButton === 'offline'
-            ? false
-            : undefined;
+      const isOnline = statusMap[activeButton]; // Directly use mapping, undefined if not matched
       const responseData = await getUsers(isOnline);
       setData(responseData);
     };
+
     fetchUsers();
   }, [activeButton]);
 
@@ -88,7 +103,7 @@ function UsersTable() {
           <tbody>
             {data?.results.map((item) => {
               return (
-                <tr className="table-row">
+                <tr key={item.id} className="table-row">
                   <td>{item.last_name}</td>
                   <td>{item.position}</td>
                   <td>{item.email}</td>
@@ -105,17 +120,22 @@ function UsersTable() {
           </tbody>
         </table>
       </div>
-      <div className="d-flex justify-content-end">
-        <div className="d-flex align-content-center">
-          <button className="button button-square-light">
-            <FontAwesomeIcon icon={faChevronLeft} />
+      <div className="d-flex justify-content-start">
+        <div className="d-flex align-content-center align-items-center">
+          <button className="button button-rounded-light" onClick={prevPage}>
+            <FontAwesomeIcon icon={faChevronLeft} fontSize={14} />
           </button>
           <div className="mx-3" style={{ padding: '7px 0px' }}>
-            <span>1</span>
+            <span className="fw-bold" style={{ fontSize: 18 }}>
+              {page}
+            </span>
           </div>
-          <button className="button button-square-light">
-            <FontAwesomeIcon icon={faChevronRight} />
+          <button className="button button-rounded-light" onClick={nextPage}>
+            <FontAwesomeIcon icon={faChevronRight} fontSize={14} />
           </button>
+          <p className="mx-3 fst-italic">
+            Page {page} of {data?.max_pages}
+          </p>
         </div>
       </div>
     </ContentWrapper>

@@ -5,6 +5,7 @@ import { UserLoginState } from '@/types/auth/UserLoginState';
 import { JWTState } from '@/types/auth/JWTState';
 import { ApiResponse } from '@/types/api/ApiResponse';
 import { PaginatedResponse } from '@/types/api/PaginatedResponse';
+import { PaginatedNumberResponse } from '@/types/api/PaginatedNumberResponse';
 
 const login = async (userData: UserLoginState) => {
   // Removing the Authorization header
@@ -52,7 +53,7 @@ const verifyToken = async (
 const getUsers = async (
   isOnline?: boolean,
   today?: boolean
-): Promise<PaginatedResponse<UserData[] | null>> => {
+): Promise<PaginatedNumberResponse<UserData[]>> => {
   const onlineParam = isOnline !== undefined ? `isOnline=${isOnline}` : '';
   const todayParam = today ? '&today=true' : '';
   return (await api.get(`api/auth/users?${onlineParam}${todayParam}`)).data;

@@ -1,1 +1,1 @@
-export { default as completeQuarters } from './CompleteQuarters';
+export { default as completeQuarters } from './completeQuarters';
