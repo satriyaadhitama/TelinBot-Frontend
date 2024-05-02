@@ -2,7 +2,6 @@
 
 :root {
   /* Existing primary and accent colors */
-  --color-primary: #ff4b4b; /* rgb(255, 75, 75) */
   --color-complementary: #4bb4ff; /* rgb(75, 180, 255) */
   --color-analogous-1: #ff4bc9; /* rgb(255, 75, 201) */
   --color-analogous-2: #ffa14b; /* rgb(255, 161, 75) */
@@ -16,14 +15,15 @@
   --color-dark-text: #e0e0e0; /* rgb(224, 224, 224) - Light text for dark background */
 
   /* Lighter and Darker shades of primary */
-  --color-primary-light-1: #ff7373; /* rgb(255, 115, 115) */
-  --color-primary-light-2: #ff9b9b; /* rgb(255, 155, 155) */
-  --color-primary-light-3: #ffc2c2; /* rgb(255, 194, 194) */
-  --color-primary-light-4: #ffe9e9; /* rgb(255, 233, 233) */
-  --color-primary-dark-1: #e04242; /* rgb(224, 66, 66) */
-  --color-primary-dark-2: #c23838; /* rgb(194, 56, 56) */
-  --color-primary-dark-3: #a42e2e; /* rgb(164, 46, 46) */
-  --color-primary-dark-4: #862424; /* rgb(134, 36, 36) */
+  --color-primary: #0d2e84; /* rgb(13, 46, 132) */
+  --color-primary-light-1: #3a5299; /* rgb(58, 82, 153) */
+  --color-primary-light-2: #667bb3; /* rgb(102, 123, 179) */
+  --color-primary-light-3: #93a3cc; /* rgb(147, 163, 204) */
+  --color-primary-light-4: #c0cce6; /* rgb(192, 204, 230) */
+  --color-primary-dark-1: #0b276f; /* rgb(11, 39, 111) */
+  --color-primary-dark-2: #091f5a; /* rgb(9, 31, 90) */
+  --color-primary-dark-3: #071745; /* rgb(7, 23, 69) */
+  --color-primary-dark-4: #050f30; /* rgb(5, 15, 48) */
 
   --color-bg-neutral: #f7f7f7;
   --color-bg-white: #fbfbfb;

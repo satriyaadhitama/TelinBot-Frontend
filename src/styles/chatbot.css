@@ -1,0 +1,108 @@
+.chatbot-header {
+  z-index: 0;
+  background-color: var(--color-light);
+}
+
+.chatbot-content-container {
+  background-color: var(--color-bg-neutral);
+  margin-bottom: 5rem;
+  padding-top: 4rem;
+  min-height: 100vh;
+}
+
+.chatbot-username {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.chatbot-message-container {
+  border-radius: 8px;
+  box-shadow:
+    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  padding: 1rem;
+}
+
+.chatbot-message-container.sender-bot {
+  background-color: var(--color-light);
+}
+.chatbot-message-container.sender-user {
+  background-color: var(--color-primary-light-4);
+}
+
+.chatbot-message {
+  font-size: 16px;
+}
+
+.chatbot-input-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  padding: 0 2.2rem;
+  background-color: var(--color-bg-neutral);
+}
+
+.chatbot-input {
+  padding: 0.9rem 0.7rem;
+}
+
+.chatbot-input-send {
+  margin: 0 0.5rem 0 1rem;
+}
+
+.chatbot-sidebar-container {
+  position: fixed;
+  height: 100vh;
+  top: 0;
+  z-index: 10;
+}
+
+.chatbot-sidebar-content {
+  z-index: 10;
+  background-color: var(--color-primary);
+  width: 300px;
+  transform: translate(-100%);
+  transition: transform 0.5s ease;
+}
+
+.chatbot-sidebar-content.active {
+  transform: translate(0%);
+}
+
+.sidebar-button-active-container {
+  z-index: 10;
+  transform: translate(-300px);
+  transition: transform 0.5s ease;
+}
+
+.sidebar-button-active-container.active {
+  transform: translate(0);
+}
+
+.chatbot-sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0);
+  z-index: 2; /* Adjust z-index if necessary to ensure it overlays properly */
+  transition: background-color 0.5s ease;
+}
+
+.chatbot-sidebar-overlay.active {
+  display: block;
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.7
+  ); /* Transition to semi-transparent black */
+}
+
+.chat-history-container {
+  background-color: var(--color-light);
+  padding: 0.6rem;
+  border-radius: 8px;
+}

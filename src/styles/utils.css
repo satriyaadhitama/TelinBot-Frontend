@@ -47,13 +47,14 @@
   outline: none;
   border: none;
   text-decoration: none;
-  padding: 10px 15px;
+
   letter-spacing: -0.03em;
   background-color: transparent;
 }
 
 .button-light {
   font-weight: 400;
+  padding: 10px 15px;
   background-color: var(--color-light);
   color: var(--color-primary);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -70,6 +71,7 @@
 
 .button-primary {
   font-weight: 400;
+  padding: 10px 15px;
   background-color: var(--color-primary);
   color: var(--color-light);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -88,6 +90,7 @@
 
 .button-success {
   font-weight: 400;
+  padding: 10px 15px;
   background-color: var(--color-success);
   color: var(--color-light);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -106,6 +109,7 @@
 
 .button-primary-blue {
   font-weight: 400;
+  padding: 10px 15px;
   background-color: var(--color-primary-blue);
   color: var(--color-light);
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -124,6 +128,7 @@
 
 .button-primary-1 {
   font-weight: 400;
+  padding: 10px 15px;
   background-color: var(--color-light);
   color: var(--color-primary);
   border-radius: 20px;
