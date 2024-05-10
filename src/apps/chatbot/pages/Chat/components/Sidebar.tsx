@@ -1,44 +1,78 @@
+import { createNewSession, getAllChatHistory } from '@/services/chatbot';
+import { RootState } from '@/types/auth/RootState';
 import { faBars, faX } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 interface SidebarContentProps {
   isActive: boolean;
 }
 
 interface ChatHistoryBarProps {
-  id: number;
+  id: string;
   title: string;
 }
 
 const ChatHistoryBar: React.FC<ChatHistoryBarProps> = ({ id, title }) => {
   return (
-    <button className="button w-100 chat-history-container">
+    <a href={`/chatbot/${id}`} className="button w-100 chat-history-container">
       <p className=" text-start">{title}</p>
-    </button>
+    </a>
   );
 };
 
 const ChatHistory = () => {
+  const { id } = useSelector((state: RootState) => state.auth.user);
+
+  const [data, setData] = useState();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseData = await getAllChatHistory(id);
+      setData(responseData);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <>
-      <div className="mb-3">
-        <ChatHistoryBar id={1} title="What is CDN?" />
-      </div>
-      <div className="mb-3">
-        <ChatHistoryBar id={2} title="Keuntungan Bulan Ini" />
-      </div>
+      {data?.map((item) => {
+        return (
+          <div className="mb-3">
+            <ChatHistoryBar id={item.id} title={item.title} />
+          </div>
+        );
+      })}
     </>
   );
 };
 
 const SidebarContent: React.FC<SidebarContentProps> = ({ isActive }) => {
+  const { id } = useSelector((state: RootState) => state.auth.user);
+
+  const navigate = useNavigate();
+
+  const handleNewChatSession = async () => {
+    const responseData = await createNewSession(id);
+    const sessionId = await responseData.detail.session_id;
+
+    navigate(`/chatbot/${sessionId}`);
+    window.location.reload();
+  };
+
   return (
     <div
       className={`chatbot-sidebar-content px-3 py-2 ${isActive ? 'active' : ''}`}
     >
       <div className="mb-5">
-        <button className="button text-light w-100" style={{ fontSize: 22 }}>
+        <button
+          className="button text-light w-100"
+          style={{ fontSize: 22 }}
+          onClick={handleNewChatSession}
+        >
           + New Chat
         </button>
       </div>
@@ -63,15 +97,15 @@ function Sidebar() {
   };
 
   return (
-    <div className="d-flex chatbot-sidebar-container">
+    <div
+      className={`d-flex chatbot-sidebar-container ${isSidebarActive ? 'active' : ''}`}
+    >
       <SidebarContent isActive={isSidebarActive} />
       <div
         className={`chatbot-sidebar-overlay ${isSidebarActive ? 'active' : ''}`}
         onClick={deactivateSidebar}
       ></div>
-      <div
-        className={`sidebar-button-active-container ${isSidebarActive ? 'active' : ''}`}
-      >
+      <div className="sidebar-button-active-container">
         {!isSidebarActive ? (
           <button
             className="button"

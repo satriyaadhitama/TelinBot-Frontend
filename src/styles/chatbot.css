@@ -27,7 +27,7 @@
   background-color: var(--color-light);
 }
 .chatbot-message-container.sender-user {
-  background-color: var(--color-primary-light-4);
+  background-color: var(--color-primary-light-5);
 }
 
 .chatbot-message {
@@ -53,30 +53,31 @@
 .chatbot-sidebar-container {
   position: fixed;
   height: 100vh;
+  left: -300px;
   top: 0;
   z-index: 10;
+  transition: left 0.5s ease;
+}
+
+.chatbot-sidebar-container.active {
+  left: 0px;
 }
 
 .chatbot-sidebar-content {
   z-index: 10;
   background-color: var(--color-primary);
   width: 300px;
-  transform: translate(-100%);
-  transition: transform 0.5s ease;
-}
-
-.chatbot-sidebar-content.active {
-  transform: translate(0%);
 }
 
 .sidebar-button-active-container {
+  height: 0;
   z-index: 10;
-  transform: translate(-300px);
-  transition: transform 0.5s ease;
+  left: -300px;
+  transition: left 0.5s ease;
 }
 
 .sidebar-button-active-container.active {
-  transform: translate(0);
+  left: 0px;
 }
 
 .chatbot-sidebar-overlay {

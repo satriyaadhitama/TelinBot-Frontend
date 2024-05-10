@@ -2,33 +2,35 @@ import UserMessage from './UserMessage';
 import Header from './Header';
 import ChatInput from './ChatInput';
 import Sidebar from './Sidebar';
-
-interface SenderType {
-  sender: 'user' | 'bot';
-}
-
-const message =
-  'Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi nisi accusantium officiis non excepturi obcaecati velit, totam similique fuga laboriosam id voluptatum! Sunt sed sint aperiam praesentium odio iure rem?';
-const users: SenderType[] = ['bot', 'user', 'bot', 'user', 'bot', 'user'];
+import Conversation from './Conversation';
+import { ChangeEvent, useEffect, useState } from 'react';
+import { getSessionChat } from '@/services/chatbot';
+import { ChatMessage } from '@/types/api/ChatSessionHistory';
+import { useParams } from 'react-router-dom';
 
 function Main() {
+  const { sessionId } = useParams();
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const responseData = await getSessionChat(sessionId);
+      setMessages(responseData);
+    };
+    fetchData();
+  }, []);
+
+  const addMessage = (message: ChatMessage) => {
+    setMessages((prev) => [...prev, message]);
+  };
+
   return (
     <div>
       <Header />
       <Sidebar />
-      <div className="d-flex justify-content-center chatbot-content-container">
-        <div className="col-lg-8 col-md-9 col-sm-10 col-11">
-          {users.map((item) => {
-            return (
-              <div className="mb-3" key={item}>
-                <UserMessage sender={item} message={message} />
-              </div>
-            );
-          })}
-        </div>
-      </div>
+      <Conversation messages={messages} />
       <div className="d-flex justify-content-center chatbot-input-container">
-        <ChatInput />
+        <ChatInput handleMessageData={addMessage} />
       </div>
     </div>
   );
