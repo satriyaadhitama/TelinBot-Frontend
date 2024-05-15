@@ -6,6 +6,11 @@ export interface ChatMessage {
   created_at: string;
 }
 
+export interface Message {
+  sender: number;
+  message: string;
+}
+
 // Define type for the detail object containing both 'send' and 'reply' messages
 export interface ChatDetail {
   send: ChatMessage;

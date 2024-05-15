@@ -1,28 +1,35 @@
 import { sendMessage } from '@/services/chatbot';
-import { ChatMessage } from '@/types/api/ChatSessionHistory';
+import { Message } from '@/types/api/ChatSessionHistory';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { ChangeEvent, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 interface ChatInputProps {
-  handleMessageData: (message: ChatMessage) => void;
+  handleMessage: (message: Message) => void;
 }
 
-const ChatInput: React.FC<ChatInputProps> = ({ handleMessageData }) => {
+const ChatInput: React.FC<ChatInputProps> = ({ handleMessage }) => {
   const { sessionId } = useParams();
   const [messageInput, setMessageInput] = useState('');
+
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMessageInput(event.target.value);
   };
 
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+
   const handleSend = async () => {
-    const responseData = await sendMessage(messageInput, sessionId);
-    const sentMessage = responseData.detail.send;
-    const repliedMessage = responseData.detail.reply;
-    handleMessageData(sentMessage);
-    handleMessageData(repliedMessage);
     setMessageInput('');
+    handleMessage({ sender: 1, message: messageInput });
+
+    // Wait for 0.5 seconds
+    // await delay(500);
+
+    const responseData = await sendMessage(messageInput, sessionId);
+    const botReply = responseData.detail.reply;
+    handleMessage({ sender: botReply.sender, message: botReply.message });
   };
 
   return (

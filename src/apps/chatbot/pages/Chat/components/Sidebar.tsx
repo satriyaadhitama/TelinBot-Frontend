@@ -10,12 +10,12 @@ interface SidebarContentProps {
   isActive: boolean;
 }
 
-interface ChatHistoryBarProps {
+interface ChatHistoryData {
   id: string;
   title: string;
 }
 
-const ChatHistoryBar: React.FC<ChatHistoryBarProps> = ({ id, title }) => {
+const ChatHistoryBar: React.FC<ChatHistoryData> = ({ id, title }) => {
   return (
     <a href={`/chatbot/${id}`} className="button w-100 chat-history-container">
       <p className=" text-start">{title}</p>
@@ -26,7 +26,7 @@ const ChatHistoryBar: React.FC<ChatHistoryBarProps> = ({ id, title }) => {
 const ChatHistory = () => {
   const { id } = useSelector((state: RootState) => state.auth.user);
 
-  const [data, setData] = useState();
+  const [data, setData] = useState<ChatHistoryData[]>([]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,9 +39,9 @@ const ChatHistory = () => {
 
   return (
     <>
-      {data?.map((item) => {
+      {data.map((item) => {
         return (
-          <div className="mb-3">
+          <div className="mb-3" key={item.id}>
             <ChatHistoryBar id={item.id} title={item.title} />
           </div>
         );
