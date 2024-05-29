@@ -1,15 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-import { companyProfileRoutes } from './company-profile';
 import { dashboardRoutes } from './dashboard';
 import { authRoutes } from './auth';
 import { chatbotRoutes } from './chatbot';
+import { rootRoutes } from './root';
 
-const routes = [
-  companyProfileRoutes,
-  dashboardRoutes,
-  authRoutes,
-  chatbotRoutes,
-];
+const routes = [rootRoutes, dashboardRoutes, authRoutes, chatbotRoutes];
 
 const router = createBrowserRouter(routes);
 
