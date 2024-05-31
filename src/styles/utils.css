@@ -427,3 +427,9 @@ label {
 .faq-answer {
   font-size: 12px;
 }
+
+.text-limit {
+  display: inline-block; /* or inline-block, depending on your layout */
+  white-space: nowrap;
+  overflow: hidden;
+}

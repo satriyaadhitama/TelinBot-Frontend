@@ -2,7 +2,7 @@ import { sendMessage } from '@/services/chatbot';
 import { Message } from '@/types/api/ChatSessionHistory';
 import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 interface ChatInputProps {
@@ -17,15 +17,28 @@ const ChatInput: React.FC<ChatInputProps> = ({ handleMessage }) => {
     setMessageInput(event.target.value);
   };
 
-  const delay = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
+  useEffect(() => {
+    const keyDownHandler = (event: KeyboardEvent) => {
+      if (
+        event.key === 'Enter' &&
+        !event.shiftKey &&
+        !event.ctrlKey &&
+        !event.altKey
+      ) {
+        event.preventDefault();
+        handleSend();
+      }
+    };
+
+    document.addEventListener('keydown', keyDownHandler);
+    return () => {
+      document.removeEventListener('keydown', keyDownHandler);
+    };
+  }, [messageInput]);
 
   const handleSend = async () => {
     setMessageInput('');
     handleMessage({ sender: 1, message: messageInput });
-
-    // Wait for 0.5 seconds
-    // await delay(500);
 
     const responseData = await sendMessage(messageInput, sessionId);
     const botReply = responseData.detail.reply;
