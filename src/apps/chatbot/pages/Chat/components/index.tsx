@@ -42,7 +42,9 @@ function Main() {
     <div>
       <Header />
       <Sidebar />
-      <Conversation messages={messages} />
+      <div className='chat-container'>
+        <Conversation messages={messages} />
+      </div>
       <div className="d-flex justify-content-center chatbot-input-container">
         <ChatInput handleMessage={handleMessage} />
       </div>

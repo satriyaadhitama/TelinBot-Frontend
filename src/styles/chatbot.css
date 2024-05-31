@@ -4,9 +4,12 @@
 }
 
 .chatbot-content-container {
-  background-color: var(--color-bg-neutral);
   margin-bottom: 5rem;
   padding-top: 4rem;
+}
+
+.chat-container {
+  background-color: var(--color-bg-neutral);
   min-height: 100vh;
 }
 

@@ -8,7 +8,7 @@ interface ConversationProps {
 
 const NoMessages = () => {
   return (
-    <div className="d-flex justify-content-center align-items-center h-75">
+    <div className="d-flex justify-content-center align-items-center" style={{height: '75vh'}}>
       <p className="text-center" style={{ fontSize: 50 }}>
         How Can I Help You Today
       </p>
