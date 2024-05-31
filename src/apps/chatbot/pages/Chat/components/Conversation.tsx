@@ -8,7 +8,10 @@ interface ConversationProps {
 
 const NoMessages = () => {
   return (
-    <div className="d-flex justify-content-center align-items-center" style={{height: '75vh'}}>
+    <div
+      className="d-flex justify-content-center align-items-center"
+      style={{ height: '75vh' }}
+    >
       <p className="text-center" style={{ fontSize: 50 }}>
         How Can I Help You Today
       </p>
@@ -38,7 +41,9 @@ const Conversation: React.FC<ConversationProps> = ({ messages }) => {
     <div className="d-flex justify-content-center chatbot-content-container">
       <div className="col-lg-8 col-md-9 col-sm-10 col-11">
         {messages.length > 0 ? (
-          <Messages messages={messages} />
+          <div className='mt-4'>
+            <Messages messages={messages} />
+          </div>
         ) : (
           <NoMessages />
         )}
