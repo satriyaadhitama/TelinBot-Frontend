@@ -3,7 +3,7 @@ import ChatInput from './ChatInput';
 import Sidebar from './Sidebar';
 import Conversation from './Conversation';
 import { useEffect, useState } from 'react';
-import { getSessionChat } from '@/services/chatbot';
+import { getSessionChat, updateChatSessionTitle } from '@/services/chatbot';
 import { Message } from '@/types/api/ChatSessionHistory';
 import { useParams } from 'react-router-dom';
 
@@ -26,7 +26,15 @@ function Main() {
     setMessages((prev) => [...prev, message]);
   };
 
+  const setInitialMessage = async (newTitle: string) => {
+    await updateChatSessionTitle(newTitle, sessionId);
+  };
+
   useEffect(() => {
+    if (messages.length == 1) {
+      const newTitle = messages[0].message;
+      setInitialMessage(newTitle);
+    }
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
   }, [messages]);
 

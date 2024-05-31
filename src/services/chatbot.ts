@@ -30,4 +30,23 @@ const sendMessage = async (
   return response.data;
 };
 
-export { getAllChatHistory, getSessionChat, sendMessage, createNewSession };
+const updateChatSessionTitle = async (newTitle: string, sessionId: string) => {
+  const formData = new FormData();
+  formData.append('new_title', newTitle);
+  await api.patch(`api/chatbot/${sessionId}`, formData, {
+    headers: { 'Content-Type': 'multipart/form-data' },
+  });
+};
+
+const deleteSessionChat = async (sessionId: string) => {
+  await api.delete(`api/chatbot/${sessionId}`);
+};
+
+export {
+  getAllChatHistory,
+  getSessionChat,
+  sendMessage,
+  createNewSession,
+  updateChatSessionTitle,
+  deleteSessionChat,
+};

@@ -1,6 +1,12 @@
 import { useLogoutHandler } from '@/hooks/auth';
-import { createNewSession, getAllChatHistory } from '@/services/chatbot';
+import {
+  createNewSession,
+  deleteSessionChat,
+  getAllChatHistory,
+  updateChatSessionTitle,
+} from '@/services/chatbot';
 import { RootState } from '@/types/auth/RootState';
+import { faPenToSquare } from '@fortawesome/free-regular-svg-icons';
 import {
   faBars,
   faEllipsisH,
@@ -19,10 +25,11 @@ import React, {
   useState,
 } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface SidebarContentProps {
   isActive: boolean;
+  handleSidebarToggler: () => void;
 }
 
 interface ChatHistoryData {
@@ -35,12 +42,14 @@ interface ModalActionProps {
   id: string;
   style: React.CSSProperties;
   onEditTitle: () => void;
+  onDeleteSession: () => void;
 }
 
 const ModalAction: React.FC<ModalActionProps> = ({
   id,
   style,
   onEditTitle,
+  onDeleteSession,
 }) => {
   return (
     <div className="chat-history-modal-action" style={style}>
@@ -49,7 +58,7 @@ const ModalAction: React.FC<ModalActionProps> = ({
           <FontAwesomeIcon icon={faPencil} />
           <span className="px-2">Change Title</span>
         </li>
-        <li className="sidebar-modal-item">
+        <li className="sidebar-modal-item" onClick={onDeleteSession}>
           <FontAwesomeIcon icon={faTrash} className="text-danger" />
           <span className="text-danger px-2">Delete</span>
         </li>
@@ -63,12 +72,16 @@ const ChatHistoryBar: React.FC<ChatHistoryData> = ({
   title,
   scrollContainerRef,
 }) => {
+  const { sessionId } = useParams();
   const [isModalActionOpen, setIsModalActionOpen] = useState(false);
   const [modalStyle, setModalStyle] = useState<React.CSSProperties>({});
   const actionRef = useRef<HTMLDivElement>(null);
   const parentRef = useRef<HTMLDivElement>(null);
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   const [newTitle, setNewTitle] = useState(title);
+  const [isDeleted, setIsDeleted] = useState(false);
+
+  const navigate = useNavigate();
 
   const handleClickOutside = (event: MouseEvent) => {
     if (
@@ -132,22 +145,35 @@ const ChatHistoryBar: React.FC<ChatHistoryData> = ({
     setNewTitle(event.target.value);
   };
 
-  const handleTitleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleTitleKeyDown = async (
+    event: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     if (event.key === 'Enter') {
       setIsEditingTitle(false);
       // Optionally update title in parent component or state if needed
+      await updateChatSessionTitle(newTitle, id);
     }
   };
 
-  const handleTitleBlur = () => {
+  const handleTitleBlur = async () => {
     setIsEditingTitle(false);
     // Optionally update title in parent component or state if needed
+    await updateChatSessionTitle(newTitle, id);
+  };
+
+  const handleDeleteSession = async () => {
+    await deleteSessionChat(id);
+    setIsDeleted(true);
+    setIsModalActionOpen(false);
+    if (sessionId === id) {
+      navigate('/chatbot', { replace: true });
+    }
   };
 
   return (
     <div
       ref={parentRef}
-      className="d-flex justify-content-between align-items-center w-100 chat-history-container"
+      className={`d-flex justify-content-between align-items-center w-100 chat-history-container ${isDeleted ? 'hidden' : 'visible'}`}
     >
       <a href={`/chatbot/${id}`} className="text-limit w-100">
         {isEditingTitle ? (
@@ -157,7 +183,7 @@ const ChatHistoryBar: React.FC<ChatHistoryData> = ({
             onChange={handleTitleChange}
             onKeyDown={handleTitleKeyDown}
             onBlur={handleTitleBlur} // Handle click outside input
-            style={{ marginLeft: 50 }}
+            className="mx-5"
             autoFocus
           />
         ) : (
@@ -173,6 +199,7 @@ const ChatHistoryBar: React.FC<ChatHistoryData> = ({
             id={id}
             style={modalStyle}
             onEditTitle={handleEditTitle}
+            onDeleteSession={handleDeleteSession}
           />
         </div>
       )}
@@ -199,11 +226,11 @@ const ChatHistory = () => {
     <div
       ref={scrollContainerRef}
       className="overflow-y-scroll"
-      style={{ height: 660, msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+      style={{ height: 680, msOverflowStyle: 'none', scrollbarWidth: 'none' }}
     >
       {data.map((item) => {
         return (
-          <div className="mb-4" key={item.id}>
+          <div className="" key={item.id}>
             <ChatHistoryBar
               id={item.id}
               title={item.title}
@@ -216,16 +243,21 @@ const ChatHistory = () => {
   );
 };
 
-const SidebarContent: React.FC<SidebarContentProps> = ({ isActive }) => {
+const SidebarContent: React.FC<SidebarContentProps> = ({
+  isActive,
+  handleSidebarToggler,
+}) => {
   const { id, first_name, last_name } = useSelector(
     (state: RootState) => state.auth.user
   );
+
+  const navigate = useNavigate();
 
   const handleNewChatSession = async () => {
     const responseData = await createNewSession(id);
     const sessionId = await responseData.detail.session_id;
 
-    navigate(`/chatbot/${sessionId}`);
+    navigate(`/chatbot/${sessionId}`, { replace: true });
     window.location.reload();
   };
 
@@ -235,16 +267,27 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ isActive }) => {
     <div
       className={`d-flex flex-column chatbot-sidebar-content px-4 py-2 ${isActive ? 'active' : ''}`}
     >
-      <div className="mb-5">
+      <div className="d-flex justify-content-between align-items-center mb-4">
         <button
-          className="button text-light w-100"
+          className="button text-light p-2 hover-primary-light-1"
+          onClick={handleSidebarToggler}
+        >
+          <FontAwesomeIcon icon={faBars} fontSize={20} />
+        </button>
+        <button
+          className="button text-light p-2 hover-primary-light-1"
           style={{ fontSize: 22 }}
           onClick={handleNewChatSession}
         >
-          + New Chat
+          <FontAwesomeIcon
+            icon={faPenToSquare}
+            fontSize={20}
+            className="mx-2"
+          />
+          <span style={{ fontSize: 18 }}>New Chat</span>
         </button>
       </div>
-      <div className="w-100 mb-4">
+      <div className="w-100">
         <ChatHistory />
       </div>
       <div className="d-flex justify-content-between align-items-center w-100">
@@ -252,16 +295,17 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ isActive }) => {
           <FontAwesomeIcon
             icon={faUserCircle}
             className="text-light"
-            style={{ fontSize: 28 }}
+            style={{ fontSize: 32, marginRight: 18 }}
           />
-          <p
-            className="text-light px-3 fst-italic"
-            style={{ fontSize: 18, fontWeight: 600 }}
-          >
-            {first_name} {last_name}
-          </p>
+          <div>
+            <p className="sidebar-username-text">{first_name}</p>
+            <p className="sidebar-username-text">{last_name}</p>
+          </div>
         </div>
-        <button className="button d-flex align-items-center" onClick={logout}>
+        <button
+          className="button d-flex align-items-center p-2 hover-primary-light-1"
+          onClick={logout}
+        >
           <FontAwesomeIcon
             icon={faSignOutAlt}
             className="text-light"
@@ -277,40 +321,30 @@ const SidebarContent: React.FC<SidebarContentProps> = ({ isActive }) => {
 function Sidebar() {
   const [isSidebarActive, setIsSidebarActive] = useState(false);
 
-  const activateSidebar = () => {
-    setIsSidebarActive(true);
-  };
-  const deactivateSidebar = () => {
-    setIsSidebarActive(false);
+  const toggleSidebar = () => {
+    setIsSidebarActive(!isSidebarActive);
   };
 
   return (
     <div
       className={`d-flex chatbot-sidebar-container ${isSidebarActive ? 'active' : ''}`}
     >
-      <SidebarContent isActive={isSidebarActive} />
+      <SidebarContent
+        isActive={isSidebarActive}
+        handleSidebarToggler={toggleSidebar}
+      />
       <div
         className={`chatbot-sidebar-overlay ${isSidebarActive ? 'active' : ''}`}
-        onClick={deactivateSidebar}
-      >
-        asd
-      </div>
+        onClick={toggleSidebar}
+      ></div>
       <div className="sidebar-button-active-container">
-        {!isSidebarActive ? (
+        {!isSidebarActive && (
           <button
-            className="button"
-            onClick={activateSidebar}
-            style={{ padding: '0.8rem' }}
+            className="button hover-medium-gray p-2"
+            onClick={toggleSidebar}
+            style={{ margin: '0.7rem 1.5rem' }}
           >
-            <FontAwesomeIcon icon={faBars} />
-          </button>
-        ) : (
-          <button
-            className="button"
-            onClick={deactivateSidebar}
-            style={{ padding: '0.8rem' }}
-          >
-            <FontAwesomeIcon icon={faX} className="text-light" />
+            <FontAwesomeIcon icon={faBars} fontSize={20} />
           </button>
         )}
       </div>

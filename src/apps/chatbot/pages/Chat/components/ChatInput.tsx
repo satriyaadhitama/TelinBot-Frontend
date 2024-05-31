@@ -23,7 +23,8 @@ const ChatInput: React.FC<ChatInputProps> = ({ handleMessage }) => {
         event.key === 'Enter' &&
         !event.shiftKey &&
         !event.ctrlKey &&
-        !event.altKey
+        !event.altKey &&
+        messageInput
       ) {
         event.preventDefault();
         handleSend();

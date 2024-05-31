@@ -433,3 +433,24 @@ label {
   white-space: nowrap;
   overflow: hidden;
 }
+
+.hidden {
+  display: none;
+  opacity: 0;
+  transition: all 0.5s ease-in-out; /* Adjust transition properties as needed */
+}
+
+.visible {
+  opacity: 1;
+  visibility: visible;
+}
+
+.hover-primary-light-1:hover {
+  border-radius: 5px;
+  background-color: var(--color-primary-light-1);
+}
+
+.hover-medium-gray:hover {
+  border-radius: 5px;
+  background-color: var(--color-medium-gray);
+}
