@@ -26,9 +26,7 @@ const initialState: AuthState = {
 
 export const loginUser = createAsyncThunk(
   'auth/login',
-  async (userData: UserLoginState) => {
-    // Login, retrieve token and set to header auth
-    const token = await login(userData);
+  async (token: string) => {
     // Set header authorization
     api.defaults.headers.common['Authorization'] = `Bearer ${token?.access}`;
     // Set user state

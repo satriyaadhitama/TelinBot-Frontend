@@ -328,7 +328,7 @@ label {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -340,6 +340,7 @@ label {
   min-width: 250px;
   min-height: 100px;
   border-radius: 12px;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
 }
@@ -356,7 +357,6 @@ label {
 .modal-content {
   display: flex;
   flex-direction: column;
-  padding: 10px 25px 20px;
 }
 
 .icon {
@@ -453,4 +453,17 @@ label {
 .hover-medium-gray:hover {
   border-radius: 5px;
   background-color: var(--color-medium-gray);
+}
+
+.error-input {
+  border: 2px solid red;
+  box-shadow: 0 0 5px red;
+  outline: none;
+}
+
+.input-error-message {
+  display: block;
+  margin-top: 5px;
+  font-size: 12px;
+  color: red;
 }

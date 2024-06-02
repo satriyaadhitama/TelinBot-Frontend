@@ -4,22 +4,33 @@ import { User, UserData } from '@/types/auth/User';
 import { UserLoginState } from '@/types/auth/UserLoginState';
 import { JWTState } from '@/types/auth/JWTState';
 import { ApiResponse } from '@/types/api/ApiResponse';
-import { PaginatedResponse } from '@/types/api/PaginatedResponse';
 import { PaginatedNumberResponse } from '@/types/api/PaginatedNumberResponse';
 
 const login = async (userData: UserLoginState) => {
-  // Removing the Authorization header
-  delete api.defaults.headers.common['Authorization'];
-
   try {
     const token: JWTState = (await api.post('api/auth/login', userData)).data;
     return token;
   } catch (e) {
-    console.error('Authentication failed:', e);
+    throw new Error(e.message);
   }
 };
 
-const register = async (formData: FormData) => {
+const register = async (
+  firstName: string,
+  lastName: string,
+  email: string,
+  phoneNumber: string,
+  password: string,
+  jobPosition: string
+) => {
+  const formData = new FormData();
+  formData.append('first_name', firstName);
+  formData.append('last_name', lastName);
+  formData.append('email', email);
+  formData.append('phone_number', phoneNumber);
+  formData.append('password', password);
+  formData.append('position', jobPosition);
+
   await api.post('api/auth/register', formData, {
     headers: { 'Content-Type': 'multipart/form-data' },
   });

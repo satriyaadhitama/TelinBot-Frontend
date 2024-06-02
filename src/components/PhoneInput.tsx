@@ -4,18 +4,19 @@ import React, { useEffect, useState } from 'react';
 import Select from 'react-select';
 
 const countries: Option[] = [
-  { value: '+1', label: 'US (+1)' },
-  { value: '+44', label: 'UK (+44)' },
-  { value: '+1', label: 'CA (+1)' },
-  { value: '+61', label: 'AU (+61)' },
   { value: '+62', label: 'ID (+62)' },
+  { value: '+61', label: 'AU (+61)' },
+  { value: '+44', label: 'UK (+44)' },
+  { value: '+1', label: 'US (+1)' },
+  { value: '+1', label: 'CA (+1)' },
 ];
 
 interface PhoneInputProps {
   onChange: (phoneNumber: string) => void;
+  isError: boolean;
 }
 
-const PhoneInput: React.FC<PhoneInputProps> = ({ onChange }) => {
+const PhoneInput: React.FC<PhoneInputProps> = ({ onChange, isError }) => {
   const [selectedCountry, setSelectedCountry] = useState<Option>(countries[0]);
   const [phoneNumber, setPhoneNumber] = useState('');
 
@@ -33,8 +34,10 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ onChange }) => {
   };
 
   useEffect(() => {
-    const completePhoneNumber = selectedCountry.value + phoneNumber;
-    onChange(completePhoneNumber);
+    if (phoneNumber !== '') {
+      const completePhoneNumber = selectedCountry.value + phoneNumber;
+      onChange(completePhoneNumber);
+    }
   }, [selectedCountry, phoneNumber]);
 
   return (
@@ -50,7 +53,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ onChange }) => {
         value={phoneNumber}
         onChange={handlePhoneNumberChange}
         placeholder="Phone number"
-        className="form-control"
+        className={`form-control ${isError ? 'error-input' : ''}`}
         style={{ marginLeft: '10px' }}
       />
     </div>
