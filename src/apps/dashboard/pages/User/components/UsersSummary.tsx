@@ -42,7 +42,7 @@ function UsersSummary() {
   useEffect(() => {
     const fetchData = async () => {
       // Fetch current online users
-      const responseCurrentOnline = await getUsers(true);
+      const responseCurrentOnline = await getUsers(undefined, true);
       const countCurrentOnline = responseCurrentOnline?.results?.length;
       // Fetch Today Online
       const responseTodayOnline = await getUsers(undefined, true);

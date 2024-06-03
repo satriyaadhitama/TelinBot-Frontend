@@ -52,15 +52,15 @@ function UsersTable() {
       offline: false,
       allUsers: undefined,
     };
-
+    
     const fetchUsers = async () => {
       const isOnline = statusMap[activeButton]; // Directly use mapping, undefined if not matched
-      const responseData = await getUsers(isOnline);
+      const responseData = await getUsers(page, isOnline);
       setData(responseData);
     };
 
     fetchUsers();
-  }, [activeButton]);
+  }, [page, activeButton]);
 
   return (
     <ContentWrapper title="USERS TABLE">

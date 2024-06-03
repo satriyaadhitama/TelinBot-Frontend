@@ -13,7 +13,6 @@ function Header() {
   return (
     <div className="dashboard-header">
       <div className="d-flex align-items-center">
-        <FontAwesomeIcon icon={faBell} className="icon-rounded fs-4 me-2" />
         <FontAwesomeIcon
           icon={faUser}
           className="icon-rounded bg-color-primary me-3"

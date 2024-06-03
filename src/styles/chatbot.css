@@ -140,29 +140,49 @@
   padding: 10px;
 }
 
-.sidebar-modal {
-  background-color: var(--color-light);
-  width: 12rem;
+
+.conversation-container {
+  overflow: hidden;
+}
+
+.conversation {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  background-color: rgb(249, 249, 249);
+  height: 100%;
+  border-radius: 20px;
   padding: 10px;
-  border-radius: 10px;
-  box-shadow:
-    rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
-    rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
 }
 
-.sidebar-modal-item {
-  font-size: 16px;
-  border-radius: 10px;
-  cursor: pointer;
-  padding: 5px 12px;
+.bubble-receiver {
+  align-self: flex-start;
+  background-color: rgb(220, 220, 220);
+  max-width: 65%;
+  border-radius: 15px;
+  padding: 12px;
+  box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar-modal-item:hover {
-  background-color: var(--color-medium-gray);
+.bubble-sender {
+  align-self: self-end;
+  background-color: var(--color-primary-light-3);
+  max-width: 65%;
+  border-radius: 15px;
+  padding: 12px;
+  box-shadow: 5px 5px 15px -3px rgba(0, 0, 0, 0.1);
 }
 
-.sidebar-username-text {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--color-light);
+.bubble-text-message {
+  color: var(--color-dark);
+  font-size: 12px;
+  margin: 0;
+}
+
+.bubble-time {
+  display: block;
+  font-size: 10px;
+  color: grey;
 }

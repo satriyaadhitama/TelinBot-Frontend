@@ -66,15 +66,15 @@ const Chart: React.FC<ChartDataProps> = ({ data }) => {
       <AreaChart data={data}>
         <defs>
           <linearGradient id="color" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="5%" stopColor="#ff7373" stopOpacity={0.8} />
-            <stop offset="95%" stopColor="#ff7373" stopOpacity={0.05} />
+            <stop offset="5%" stopColor="#3a5299" stopOpacity={0.8} />
+            <stop offset="95%" stopColor="#3a5299" stopOpacity={0.05} />
           </linearGradient>
         </defs>
 
         <Area
           type="monotone"
           dataKey="y"
-          stroke="#ff7373"
+          stroke="#3a5299"
           fillOpacity={1}
           fill="url(#color)"
         />

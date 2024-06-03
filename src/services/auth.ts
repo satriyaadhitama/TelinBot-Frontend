@@ -62,12 +62,21 @@ const verifyToken = async (
 };
 
 const getUsers = async (
+  page?: number,
   isOnline?: boolean,
   today?: boolean
 ): Promise<PaginatedNumberResponse<UserData[]>> => {
+  const pageParam = page !== undefined ? `page=${page}` : '';
   const onlineParam = isOnline !== undefined ? `isOnline=${isOnline}` : '';
-  const todayParam = today ? '&today=true' : '';
-  return (await api.get(`api/auth/users?${onlineParam}${todayParam}`)).data;
+  const todayParam = today ? 'today=true' : '';
+  if (page !== undefined) {
+    console.log(`api/auth/users?${pageParam}&${onlineParam}&${todayParam}`);
+    return (
+      await api.get(`api/auth/users?${pageParam}&${onlineParam}&${todayParam}`)
+    ).data;
+  } else {
+    return (await api.get(`api/auth/users?${onlineParam}&${todayParam}`)).data;
+  }
 };
 
 const getUsersHistory = async (
