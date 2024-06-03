@@ -22,11 +22,12 @@ function Main() {
   const isAuthenticated = useSelector(
     (state: RootState) => state.auth.isAuthenticated
   );
-
+  //  Menampung value dari input form
   const [input, setInput] = useState<UserLoginState>({
     email: '',
     password: '',
   });
+  //  Menampung error message validasi form
   const [inputErrors, setInputErrors] = useState<UserLoginState>({
     email: '',
     password: '',

@@ -43,10 +43,10 @@ function Sidebar() {
             />
             <span>Keuangan</span>
           </a> */}
-          <a href="/dashboard/frequently-asked" className="sidebar-item">
+          {/* <a href="/dashboard/frequently-asked" className="sidebar-item">
             <FontAwesomeIcon icon={faCircleQuestion} className="sidebar-icon" />
             <span>FAQ</span>
-          </a>
+          </a> */}
         </div>
         <div className="sidebar-footer">
           <button className="button button-primary" onClick={logout}>

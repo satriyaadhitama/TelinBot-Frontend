@@ -13,6 +13,6 @@ export const dashboardRoutes = {
   children: [
     { index: true, element: <DashboardRoot /> },
     { path: 'users', element: <User /> },
-    { path: 'frequently-asked', element: <Question /> },
+    // { path: 'frequently-asked', element: <Question /> },
   ],
 };

@@ -18,10 +18,14 @@ import { ChartDataProps } from '@/types/data/ChartDataProps';
 import { DataProps } from '@/types/data/DataProps';
 import { getMaxValue } from '../../helpers';
 
-type FilterType = 'week' | 'month';
+type FilterType = 'week' | 'month' | 'year';
 
 const getPastData = (filter: FilterType, data: DataProps[]): DataProps[] => {
-  const filters: { [key in FilterType]: number } = { week: 7, month: 30 };
+  const filters: { [key in FilterType]: number } = {
+    week: 7,
+    month: 30,
+    year: 360,
+  };
   const currentDate = new Date();
   let resultData: DataProps[] = [];
 
@@ -115,6 +119,7 @@ function UsersChartHistory() {
   const options = [
     { name: 'Weekly', value: 'week' },
     { name: 'Monthly', value: 'month' },
+    { name: 'Yearly', value: 'year' },
   ];
   const [selectedOption, setSelectedOption] = useState<DropdownOption>(
     options[0]

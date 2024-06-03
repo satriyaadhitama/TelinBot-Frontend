@@ -26,8 +26,10 @@ const initialRegisterForm: RegisterForm = {
 };
 
 function Main() {
+  // Menampung Value dari Input
   const [formInputData, setFormInputData] =
     useState<RegisterForm>(initialRegisterForm);
+  // Menampung Error Message validasi
   const [inputErrors, setInputErrors] =
     useState<RegisterForm>(initialRegisterForm);
   const [isUserAgree, setIsUserAgree] = useState(false);
@@ -87,7 +89,6 @@ function Main() {
         if (axios.isAxiosError(error)) {
           const axiosError = error as AxiosError;
           if (axiosError.response?.status === 409) {
-            console.log('Email Already Used');
             setError('email', 'Email already exist');
           }
         }

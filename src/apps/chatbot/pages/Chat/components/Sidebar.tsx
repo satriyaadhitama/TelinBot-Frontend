@@ -225,8 +225,8 @@ const ChatHistory = () => {
   return (
     <div
       ref={scrollContainerRef}
-      className="overflow-y-scroll"
-      style={{ height: 680, msOverflowStyle: 'none', scrollbarWidth: 'none' }}
+      className="overflow-y-scroll h-100"
+      style={{ msOverflowStyle: 'none', scrollbarWidth: 'none' }}
     >
       {data.map((item) => {
         return (
@@ -287,10 +287,10 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
           <span style={{ fontSize: 18 }}>New Chat</span>
         </button>
       </div>
-      <div className="w-100">
+      <div className="w-100" style={{height: '80%'}}>
         <ChatHistory />
       </div>
-      <div className="d-flex justify-content-between align-items-center w-100">
+      <div className="sidebar-footer justify-content-between">
         <div className="d-flex align-items-center">
           <FontAwesomeIcon
             icon={faUserCircle}
