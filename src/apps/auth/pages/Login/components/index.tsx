@@ -47,7 +47,7 @@ function Main() {
     const errorValidation = validateLogin(input);
     setInputErrors(errorValidation);
 
-    const hasErrors = Object.values(inputErrors).some((value) => value !== '');
+    const hasErrors = Object.values(errorValidation).some((value) => value !== '');
 
     if (!hasErrors) {
       try {
@@ -65,6 +65,11 @@ function Main() {
       ...prev,
       [name]: value,
     }));
+
+    setInputErrors({
+      ...inputErrors,
+      [name]: false,
+    });
   };
 
   if (isAuthenticated) {

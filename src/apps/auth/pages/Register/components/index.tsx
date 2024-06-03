@@ -71,7 +71,9 @@ function Main() {
     const errorValidation = validateRegister(formInputData);
     setInputErrors(errorValidation);
 
-    const hasErrors = Object.values(inputErrors).some((value) => value !== '');
+    const hasErrors = Object.values(errorValidation).some(
+      (value) => value !== ''
+    );
 
     if (!hasErrors && isUserAgree) {
       // User Register API
