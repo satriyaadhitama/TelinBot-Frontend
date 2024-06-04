@@ -70,7 +70,6 @@ const getUsers = async (
   const onlineParam = isOnline !== undefined ? `isOnline=${isOnline}` : '';
   const todayParam = today ? 'today=true' : '';
   if (page !== undefined) {
-    console.log(`api/auth/users?${pageParam}&${onlineParam}&${todayParam}`);
     return (
       await api.get(`api/auth/users?${pageParam}&${onlineParam}&${todayParam}`)
     ).data;
@@ -79,10 +78,29 @@ const getUsers = async (
   }
 };
 
+const getUsersFilter = async (page: number, isOnline: boolean, q?: string) => {
+  const pageParam = page !== undefined ? `page=${page}` : '';
+  const onlineParam = isOnline !== undefined ? `isOnline=${isOnline}` : '';
+  const qParam = q !== undefined ? `q=${q}` : '';
+  return (await api.get(`api/auth/users?${pageParam}&${onlineParam}&${qParam}`))
+    .data;
+};
+
 const getUsersHistory = async (
   filter: string
 ): Promise<{ date: string; value: number }[] | null> => {
   return (await api.get(`api/auth/users/history?filter=${filter}`)).data;
+};
+
+const getUsersHistoryRange = async (
+  startDate: string,
+  endDate: string
+): Promise<{ date: string; value: number }[] | null> => {
+  return (
+    await api.get(
+      `api/auth/users/history?startDate=${startDate}&endDate=${endDate}`
+    )
+  ).data;
 };
 
 export {
@@ -91,6 +109,8 @@ export {
   logout,
   getUserInfo,
   getUsers,
+  getUsersFilter,
   verifyToken,
   getUsersHistory,
+  getUsersHistoryRange,
 };

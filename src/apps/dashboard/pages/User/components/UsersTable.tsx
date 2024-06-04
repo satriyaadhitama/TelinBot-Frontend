@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import SearchBar from '@/components/SearchBar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -6,16 +6,25 @@ import {
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
 import ContentWrapper from '@/apps/dashboard/components/ContentWrapper';
-import { getUsers } from '@/services/auth';
+import { getUsers, getUsersFilter } from '@/services/auth';
 import { UserData } from '@/types/auth/User';
 import { PaginatedNumberResponse } from '@/types/api/PaginatedNumberResponse';
 
 type ActiveButtonState = 'allUsers' | 'online' | 'offline';
 
 interface OnlineStatusProps {
-  isOnline?: boolean;
+  isOnline: boolean;
   lastLogin: string | null;
 }
+
+// Custom debounce function
+const debounce = (func: (...args: any[]) => void, delay: number) => {
+  let debounceTimer: NodeJS.Timeout;
+  return (...args: any[]) => {
+    clearTimeout(debounceTimer);
+    debounceTimer = setTimeout(() => func(...args), delay);
+  };
+};
 
 const OnlineStatus: React.FC<OnlineStatusProps> = ({ isOnline, lastLogin }) => {
   if (isOnline) {
@@ -29,9 +38,14 @@ function UsersTable() {
   const [activeButton, setActiveButton] =
     useState<ActiveButtonState>('allUsers');
   const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState('');
 
   const handleButtonClick = (buttonName: ActiveButtonState) => {
     setActiveButton(buttonName);
+  };
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchQuery(event.target.value);
   };
 
   const nextPage = () => {
@@ -46,31 +60,38 @@ function UsersTable() {
     }
   };
 
-  useEffect(() => {
+  const updateTable = async () => {
     const statusMap = {
       online: true,
       offline: false,
       allUsers: undefined,
     };
-    
-    const fetchUsers = async () => {
-      const isOnline = statusMap[activeButton]; // Directly use mapping, undefined if not matched
-      const responseData = await getUsers(page, isOnline);
-      setData(responseData);
-    };
+    const isOnline = statusMap[activeButton]; // Directly use mapping, undefined if not matched
+    const responseData = await getUsersFilter(page, isOnline, searchQuery);
+    setData(responseData);
+  };
 
-    fetchUsers();
+  // Update data when choosing user status button and changing page
+  useEffect(() => {
+    updateTable();
   }, [page, activeButton]);
 
+  // Update data when searching with query
+  // Create a debounced version of updateTable
+  const debouncedUpdateTable = debounce(updateTable, 500); // 500ms delay
+  useEffect(() => {
+    debouncedUpdateTable();
+  }, [searchQuery]);
+
   return (
-    <ContentWrapper title="USERS TABLE">
+    <ContentWrapper title="TABEL PENGGUNA">
       <div className="d-flex justify-content-between align-items-center mb-3">
         <div>
           <button
             onClick={() => handleButtonClick('allUsers')}
             className={`button button-primary-1 mx-2 ${activeButton === 'allUsers' ? 'active' : ''}`}
           >
-            All Users
+            Semua
           </button>
           <button
             onClick={() => handleButtonClick('online')}
@@ -86,17 +107,23 @@ function UsersTable() {
           </button>
         </div>
         <div style={{ maxWidth: '15rem' }}>
-          <SearchBar />
+          <input
+            type="text"
+            placeholder="Cari Pengguna..."
+            className="form-control"
+            value={searchQuery}
+            onChange={handleInputChange}
+          />
         </div>
       </div>
       <div className="table-container mb-3">
         <table className="table" style={{ minWidth: '50rem' }}>
           <thead>
             <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Position</th>
+              <th scope="col">Nama Lengkap</th>
+              <th scope="col">Posisi</th>
               <th scope="col">Email</th>
-              <th scope="col">Phone Number</th>
+              <th scope="col">Nomor Telepon</th>
               <th scope="col">Status</th>
             </tr>
           </thead>
@@ -104,7 +131,9 @@ function UsersTable() {
             {data?.results.map((item) => {
               return (
                 <tr key={item.id} className="table-row">
-                  <td>{item.last_name}</td>
+                  <td>
+                    {item.first_name} {item.last_name}
+                  </td>
                   <td>{item.position}</td>
                   <td>{item.email}</td>
                   <td>{item.phone_number}</td>

@@ -63,9 +63,9 @@ function UsersSummary() {
   return (
     <div className="">
       <div className="row">
-        <SummaryCard title="Current Online" total={data?.currentOnline} />
-        <SummaryCard title="Today Activity" total={data?.todayOnline} />
-        <SummaryCard title="Available Users" total={data?.availableUsers} />
+        <SummaryCard title="Pengguna Online" total={data?.currentOnline} />
+        <SummaryCard title="Pengguna Hari Ini" total={data?.todayOnline} />
+        <SummaryCard title="Total Pengguna" total={data?.availableUsers} />
       </div>
     </div>
   );

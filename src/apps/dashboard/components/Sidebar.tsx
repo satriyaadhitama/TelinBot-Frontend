@@ -1,10 +1,7 @@
-import TelkomselLogo from '@/assets/Telkomsel_2021_icon.svg.png';
+import companyLogo from '@/assets/Xabiru B.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircleQuestion } from '@fortawesome/free-regular-svg-icons';
 import {
-  faFileInvoiceDollar,
   faRightFromBracket,
-  faChartSimple,
   faBars,
   faUser,
 } from '@fortawesome/free-solid-svg-icons';
@@ -24,7 +21,7 @@ function Sidebar() {
       <aside className={`sidebar ${!isActive ? 'collapsed' : ''}`}>
         <div className="sidebar-header">
           <a href="/dashboard" className="sidebar-logo">
-            <img src={TelkomselLogo} alt="" className="sidebar-logo" />
+            <img src={companyLogo} alt="" className="sidebar-logo" />
           </a>
         </div>
         <div className="sidebar-link">
