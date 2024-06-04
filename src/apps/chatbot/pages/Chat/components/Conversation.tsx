@@ -1,7 +1,6 @@
 import React from 'react';
 import UserMessage from './UserMessage';
 import { Message } from '@/types/api/ChatSessionHistory';
-
 interface ConversationProps {
   messages: Message[];
 }
@@ -13,7 +12,7 @@ const NoMessages = () => {
       style={{ height: '75vh' }}
     >
       <p className="text-center" style={{ fontSize: 50 }}>
-        How Can I Help You Today
+        Apa Yang Bisa Saya Bantu?
       </p>
     </div>
   );
@@ -41,7 +40,7 @@ const Conversation: React.FC<ConversationProps> = ({ messages }) => {
     <div className="d-flex justify-content-center chatbot-content-container">
       <div className="col-lg-8 col-md-9 col-sm-10 col-11">
         {messages.length > 0 ? (
-          <div className='mt-4'>
+          <div className="mt-4">
             <Messages messages={messages} />
           </div>
         ) : (

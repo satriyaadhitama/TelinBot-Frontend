@@ -51,7 +51,7 @@ const ChatInput: React.FC<ChatInputProps> = ({ handleMessage }) => {
       <div className="d-flex align-items-center">
         <input
           type="text"
-          placeholder="Type Message to Telinbot..."
+          placeholder="Ketik pesan anda..."
           className="form-control chatbot-input"
           value={messageInput}
           onChange={handleInputChange}

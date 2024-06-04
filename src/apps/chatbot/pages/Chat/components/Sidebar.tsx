@@ -14,16 +14,9 @@ import {
   faSignOutAlt,
   faTrash,
   faUserCircle,
-  faX,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, {
-  ChangeEvent,
-  RefObject,
-  useEffect,
-  useRef,
-  useState,
-} from 'react';
+import React, { RefObject, useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -56,11 +49,11 @@ const ModalAction: React.FC<ModalActionProps> = ({
       <ul className="sidebar-modal">
         <li className="sidebar-modal-item" onClick={onEditTitle}>
           <FontAwesomeIcon icon={faPencil} />
-          <span className="px-2">Change Title</span>
+          <span className="px-2">Ubah Nama</span>
         </li>
         <li className="sidebar-modal-item" onClick={onDeleteSession}>
           <FontAwesomeIcon icon={faTrash} className="text-danger" />
-          <span className="text-danger px-2">Delete</span>
+          <span className="text-danger px-2">Hapus</span>
         </li>
       </ul>
     </div>
@@ -284,10 +277,10 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             fontSize={20}
             className="mx-2"
           />
-          <span style={{ fontSize: 18 }}>New Chat</span>
+          <span style={{ fontSize: 18 }}>Buat Baru</span>
         </button>
       </div>
-      <div className="w-100" style={{height: '80%'}}>
+      <div className="w-100" style={{ height: '80%' }}>
         <ChatHistory />
       </div>
       <div className="sidebar-footer justify-content-between">
@@ -311,7 +304,7 @@ const SidebarContent: React.FC<SidebarContentProps> = ({
             className="text-light"
             style={{ fontSize: 18, marginRight: 5 }}
           />
-          <span className="text-light">Sign Out</span>
+          <span className="text-light">Keluar</span>
         </button>
       </div>
     </div>
