@@ -52,7 +52,7 @@ const PhoneInput: React.FC<PhoneInputProps> = ({ onChange, isError }) => {
         type="tel"
         value={phoneNumber}
         onChange={handlePhoneNumberChange}
-        placeholder="Phone number"
+        placeholder="Nomor Telepon"
         className={`form-control ${isError ? 'error-input' : ''}`}
         style={{ marginLeft: '10px' }}
       />

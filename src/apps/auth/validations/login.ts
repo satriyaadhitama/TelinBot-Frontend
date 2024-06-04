@@ -6,9 +6,9 @@ const validateLogin = (inputData: UserLoginState) => {
     password: '',
   };
 
-  if (inputData.email === '') errorMessages.email = 'Email cannot be blank';
+  if (inputData.email === '') errorMessages.email = 'Email tidak boleh kosong';
   if (inputData.password === '')
-    errorMessages.password = 'Password cannot be blank';
+    errorMessages.password = 'Password tidak boleh kosong';
   return errorMessages;
 };
 

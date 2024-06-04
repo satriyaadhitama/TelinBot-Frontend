@@ -21,23 +21,24 @@ const validateRegister = (inputData: RegisterForm) => {
 
   if (inputData.phoneNumber.length < 8) {
     errorMessages.phoneNumber =
-      'Phone number is too short. Minimum length is 8 characters.';
+      'Nomor telepon terlalu pendek. Minimal panjang karakter adalah 8';
   } else if (inputData.phoneNumber.length > 15) {
     errorMessages.phoneNumber =
-      'Phone number is too short. Maximum length is 15 characters.';
+      'Nomor telepon terlalu panjang. maksimal panjang karakter adalah 15';
   }
 
   if (inputData.password.length < 8) {
-    errorMessages.password = 'Password length must be at least 8 characters';
+    errorMessages.password =
+      'Password setidaknya memiliki karakter sepanjang 8';
   }
 
   if (inputData.password !== inputData.passwordConfirm) {
-    errorMessages.passwordConfirm = 'Password do not match';
+    errorMessages.passwordConfirm = 'Password tidak sesuai';
   }
 
   Object.keys(inputData).forEach((key) => {
     if (inputData[key as keyof RegisterForm] === '') {
-      errorMessages[key as keyof RegisterForm] = 'field cannot be blank';
+      errorMessages[key as keyof RegisterForm] = 'Input tidak dapat kosong';
     }
   });
 

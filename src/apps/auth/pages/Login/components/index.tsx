@@ -1,9 +1,9 @@
 // Import Dependencies
 import { useState, FormEvent, ChangeEvent, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 // Import Assets
-import TelkomselLogo from '@/assets/Telkomsel_2021_icon.svg.png';
+import companyLogo from '@/assets/Xabiru B.png';
 // Import Font Awesome
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope } from '@fortawesome/free-regular-svg-icons';
@@ -47,7 +47,9 @@ function Main() {
     const errorValidation = validateLogin(input);
     setInputErrors(errorValidation);
 
-    const hasErrors = Object.values(errorValidation).some((value) => value !== '');
+    const hasErrors = Object.values(errorValidation).some(
+      (value) => value !== ''
+    );
 
     if (!hasErrors) {
       try {
@@ -76,15 +78,15 @@ function Main() {
     return <Navigate to="/" replace />;
   } else {
     return (
-      <div>
+      <div style={{minWidth: 450}}>
         <div className="auth-container d-flex flex-column p-5">
-          <h1 className="text-color-primary text-center mb-4 fw-bold">LOGIN</h1>
+          <h1 className="text-color-primary text-center mb-2 fw-bold">LOGIN</h1>
           <a href="/" className="align-self-center mb-4">
             <img
-              src={TelkomselLogo}
+              src={companyLogo}
               alt=""
               className=""
-              style={{ width: '80px' }}
+              style={{ width: '200px' }}
             />
           </a>
           <form onSubmit={handleSubmitEvent} className="d-flex flex-column">
@@ -98,13 +100,10 @@ function Main() {
                   type="email"
                   id="email-input"
                   name="email"
-                  placeholder="Email Address"
+                  placeholder="Alamat Email"
                   className={`form-control ${inputErrors.email ? 'error-input' : ''}`}
                   onChange={handleInput}
                 />
-              </div>
-              <div id="emailHelp" className="form-text">
-                We'll never share your email with anyone else.
               </div>
               {inputErrors.email && (
                 <p className="input-error-message">{inputErrors.email}</p>
@@ -132,9 +131,9 @@ function Main() {
           </form>
           <div className="d-flex justify-content-center mt-4">
             <p style={{ fontSize: 14 }}>
-              Doesnt have account? &nbsp;
+              Belum memiliki akun? &nbsp;
               <a href="/auth/register" className=" text-primary">
-                Create account now
+                Buat akun sekarang
               </a>
             </p>
           </div>

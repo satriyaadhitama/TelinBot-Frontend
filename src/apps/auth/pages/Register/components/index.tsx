@@ -105,7 +105,7 @@ function Main() {
         <div className="row mb-2">
           <div className="col-6">
             <label htmlFor="firstName" className="form-label">
-              First Name
+              Nama Depan
             </label>
             <input
               type="text"
@@ -120,7 +120,7 @@ function Main() {
           </div>
           <div className="col-6">
             <label htmlFor="lastName" className="form-label">
-              Last Name
+              Nama Belakang
             </label>
             <input
               type="text"
@@ -136,7 +136,7 @@ function Main() {
         </div>
         <div className="mb-2">
           <label htmlFor="email" className="form-label">
-            Email Address
+            Alamat Email
           </label>
           <input
             type="email"
@@ -146,16 +146,13 @@ function Main() {
             onChange={handleInput}
             aria-describedby="emailHelp"
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
           {inputErrors.email && (
             <p className="input-error-message">{inputErrors.email}</p>
           )}
         </div>
         <div className="mb-2">
           <label htmlFor="phone" className="form-label">
-            Phone Number
+            Nomor Telepon
           </label>
           <PhoneInput
             onChange={handlePhoneInput}
@@ -167,7 +164,7 @@ function Main() {
         </div>
         <div className="mb-2">
           <label htmlFor="jobPosition" className="form-label">
-            Job Position
+            Posisi Pekerjaan
           </label>
           <input
             type="text"
@@ -198,7 +195,7 @@ function Main() {
           </div>
           <div className="col-6">
             <label htmlFor="passwordConfirm" className="form-label">
-              Confirm Password
+              Konfirmasi Password
             </label>
             <input
               type="password"
@@ -214,7 +211,7 @@ function Main() {
             )}
           </div>
         </div>
-        <div className="mb-2 form-check">
+        <div className="mb-2 mt-3 form-check">
           <input
             type="checkbox"
             className="form-check-input"
@@ -225,20 +222,20 @@ function Main() {
             }}
           />
           <label className="form-check-label" htmlFor="exampleCheck1">
-            I agree the{' '}
+            Saya menyetujui{' '}
             <a href="" className="text-primary link-underline">
-              term and conditions
+              syarat dan ketentuan
             </a>
           </label>
         </div>
         <button type="submit" className="mt-3 button button-primary mt-2">
-          Register Now
+          Daftar
         </button>
         <div className="d-flex justify-content-center mt-4">
           <p style={{ fontSize: 14 }}>
-            Already registered? &nbsp;
+            Sudah memiliki akun? &nbsp;
             <a href="/auth/login" className=" text-primary">
-              Login here
+              Login disini
             </a>
           </p>
         </div>
