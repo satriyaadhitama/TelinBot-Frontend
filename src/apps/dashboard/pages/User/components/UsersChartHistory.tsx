@@ -28,7 +28,6 @@ const getFormattedRangeData = (
   data: DataProps[]
 ): DataProps[] => {
   let resultData: DataProps[] = [];
-
   if (!data) return [];
   const dateLength = getDateLength(startDate, endDate);
   for (let i = dateLength; i >= 0; i--) {
